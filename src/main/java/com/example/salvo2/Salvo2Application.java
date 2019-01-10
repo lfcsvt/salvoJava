@@ -24,5 +24,16 @@ public class Salvo2Application {
 		};
 	}
 
+	public CommandLineRunner initData(GameRepository repository) {
+		return (args) -> {
+			// save a couple of customers
+			repository.save(new Game ());
+			repository.save(new Game ());
+			repository.save(new Game ());
+
+
+		};
+	}
+
 }
 
