@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.Set;
+import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+
 
 @Entity
 public class Game {
@@ -13,6 +17,8 @@ public class Game {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private Date cDate;
+    @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
+//    Set<GamePLayer> gamePlayers;
 
 
 
@@ -30,6 +36,11 @@ public class Game {
     public void setcDate(Date date) {
         this.cDate = date;
     }
+//    public void addGamePLayer(GamePLayer gamePLayer) {
+//        gamePLayer.setGame(this);
+//        gamePLayers.add(gamePLayer);
+//    }
+
 
 //    public Date toString() {
 //        return cDate;
