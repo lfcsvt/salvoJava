@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Game {
@@ -11,26 +12,26 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    private String cDate;
+    private Date cDate;
 
 
 
     public Game () { }
 
-    public Game(String gameDate) {
-        cDate = gameDate;
+    public Game(Date date) {
+        cDate = date;
 
 
     }
-    public String getcDate() {
+    public Date getcDate() {
         return cDate;
     }
 
-    public void setcDate(String gameDate) {
-        this.cDate = gameDate;
+    public void setcDate(Date date) {
+        this.cDate = date;
     }
 
-//    public String toString() {
+//    public Date toString() {
 //        return cDate;
 //    }
 }

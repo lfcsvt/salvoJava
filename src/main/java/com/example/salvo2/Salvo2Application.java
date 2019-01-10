@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalTime;
+import java.util.Date;
+
 @SpringBootApplication
 public class Salvo2Application {
 
@@ -13,9 +16,8 @@ public class Salvo2Application {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository repository) {
+	public CommandLineRunner initPlayerData(PlayerRepository repository) {
 		return (args) -> {
-			// save a couple of customers
 			repository.save(new Player ("Jack", "Bauer", "j.bauer@ctu.gov"));
 			repository.save(new Player ("Chloe", "O'Brian", "c.brian@ctu.gov"));
 			repository.save(new Player ("Kim", "Bauer", "kim_bauer@gmail.com"));
@@ -24,12 +26,13 @@ public class Salvo2Application {
 		};
 	}
 
-	public CommandLineRunner initData(GameRepository repository) {
+	@Bean
+	public CommandLineRunner initGameData(GameRepository repository) {
 		return (args) -> {
-			// save a couple of customers
-			repository.save(new Game ());
-			repository.save(new Game ());
-			repository.save(new Game ());
+			Date date = new Date();
+			repository.save(new Game (date));
+			repository.save(new Game ( Date.from(date.toInstant().plusSeconds(3600))));
+			repository.save(new Game ( Date.from(date.toInstant().plusSeconds(7200))));
 
 
 		};
