@@ -15,9 +15,7 @@ public class GamePlayer {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    private String pGame;
-    private String pPlayer;
-    private Date gameDate;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
     private Player player;
@@ -28,15 +26,29 @@ public class GamePlayer {
 
     public GamePlayer () { }
 
-    public GamePlayer (String playedgame, String gpPlayer, Date gpDate  ) {
-        pGame = playedgame;
-        pPlayer = gpPlayer;
-        gameDate = gpDate;
+    public GamePlayer (Player player, Game game) {
+        this.player = player;
+        this.game = game;
     }
 
-    public GamePlayer(Game game, Player player) {
-        this.game = game;
+    public long getId() {
+        return id;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }
 

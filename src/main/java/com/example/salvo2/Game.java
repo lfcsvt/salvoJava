@@ -17,8 +17,10 @@ public class Game {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private Date cDate;
+
+
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
-//    Set<GamePLayer> gamePlayers;
+    Set<GamePlayer> gamePlayers;
 
 
 
@@ -36,10 +38,11 @@ public class Game {
     public void setcDate(Date date) {
         this.cDate = date;
     }
-//    public void addGamePLayer(GamePLayer gamePLayer) {
-//        gamePLayer.setGame(this);
-//        gamePLayers.add(gamePLayer);
-//    }
+
+    public void addGamePLayer(GamePlayer gamePlayer) {
+        gamePlayer.setGame(this);
+        gamePlayers.add(gamePlayer);
+    }
 
 
 //    public Date toString() {
