@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import java.util.Set;
 
+
 @Entity
 public class Player {
     @Id
@@ -29,6 +30,9 @@ public class Player {
         lastName = last;
         userName = email;
 
+    }
+    public long getId() {
+        return id;
     }
     public String getFirstName() {
         return firstName;

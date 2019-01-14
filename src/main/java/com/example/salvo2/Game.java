@@ -28,11 +28,13 @@ public class Game {
 
     public Game(Date date) {
         cDate = date;
-
-
+        id = getId();
     }
     public Date getcDate() {
         return cDate;
+    }
+    public long getId() {
+        return id;
     }
 
     public void setcDate(Date date) {
@@ -45,7 +47,9 @@ public class Game {
     }
 
 
-//    public Date toString() {
-//        return cDate;
-//    }
+//   public Object getPlayer() {
+//       return this.gamePlayers;
+//   }
+
+
 }
