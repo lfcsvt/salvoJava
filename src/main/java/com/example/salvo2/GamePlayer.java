@@ -6,7 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
+import java.util.Set;
+import java.util.HashSet;
+
+
 
 @Entity
 public class GamePlayer {
@@ -22,6 +27,10 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="game_id")
     private Game game;
+
+    @OneToMany(mappedBy="gamePlayer", fetch = FetchType.EAGER)
+    Set<Ship> allShips = new HashSet<>();
+
 
     public GamePlayer () { }
 
@@ -54,6 +63,10 @@ public class GamePlayer {
     @Override
     public String toString() {
         return "GP " + this.id + " Name " + this.player.getUserName();
+    }
+
+    public void setAllShips(Set<Ship> allShips) {
+        this.allShips = allShips;
     }
 }
 

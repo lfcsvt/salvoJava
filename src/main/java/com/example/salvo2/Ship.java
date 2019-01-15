@@ -19,7 +19,7 @@ public class Ship {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="gamePlayer_id")
-    private Player gamePlayer;
+    private GamePlayer gamePlayer;
 
     public Ship () { }
 
@@ -40,11 +40,15 @@ public class Ship {
         this.shipType= type;
     }
 
-    public Player getGamePlayer() {
+    public GamePlayer getGamePlayer() {
         return gamePlayer;
     }
 
-    public void setGamePlayer(Player gamePlayer) {
+    public void setGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
+    }
+
+    public void setShipType(String shipType) {
+        this.shipType = shipType;
     }
 }
