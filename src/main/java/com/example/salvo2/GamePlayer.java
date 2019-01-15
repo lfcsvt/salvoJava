@@ -28,6 +28,7 @@ public class GamePlayer {
     public GamePlayer (Player player, Game game) {
         this.player = player;
         this.game = game;
+
     }
 
     public long getId() {
@@ -48,6 +49,11 @@ public class GamePlayer {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    @Override
+    public String toString() {
+        return "GP " + this.id + " Name " + this.player.getUserName();
     }
 }
 
