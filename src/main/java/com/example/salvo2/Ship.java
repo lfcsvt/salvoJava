@@ -7,6 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
+
 
 @Entity
 public class Ship {
@@ -16,6 +20,10 @@ public class Ship {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private String shipType;
+
+    @ElementCollection
+    @Column(name="locations")
+    private List<String> locations = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="gamePlayer_id")
@@ -50,5 +58,13 @@ public class Ship {
 
     public void setShipType(String shipType) {
         this.shipType = shipType;
+    }
+
+    public List<String> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<String> locations) {
+        this.locations = locations;
     }
 }
