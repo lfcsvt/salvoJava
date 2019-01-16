@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class Salvo2Application {
@@ -52,8 +54,14 @@ public class Salvo2Application {
 			gamePlayerRepository.save(gp5);
 
 			Ship ship1 = new Ship("Carrier");
+			ship1.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3", "H4","H5","H6")));
+			gp1.makeShip(ship1);
 			Ship ship2 = new Ship("Submarine");
+			ship2.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3", "A4")));
+			gp1.makeShip(ship2);
 			Ship ship3 = new Ship("Destroyer");
+			ship3.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3", "A4")));
+			gp1.makeShip(ship3);
 			Ship ship4 = new Ship("Battleship");
 			Ship ship5 = new Ship("Patrol Boat");
 			shipRepository.save(ship1);

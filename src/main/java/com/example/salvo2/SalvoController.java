@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,17 @@ public class SalvoController {
 
     @Autowired
     private GameRepository gameRepo;
+    @Autowired
+    private PlayerRepository playerRepo;
+    @Autowired
+    private GamePlayerRepository gamePlayerRepo;
+    @Autowired
+    private ShipRepository shipRepo;
 
     @RequestMapping("/games")
 //    public List<Game> getAll() { return gameRepo.findAll();}
-    public List<Object> getAll() {
-        System.out.println("in getAll");
+    public List<Object> getAllGames() {
+        System.out.println("in getAllGames");
         return gameRepo
                 .findAll()
                 .stream()
@@ -56,14 +63,23 @@ public class SalvoController {
                 });
         System.out.println("gPlayerDataObject");
         System.out.println(gPlayerDataObject);
+        System.out.println(gPlayerDataObject);
         return gPlayerDataObject;
     }
 
+    @RequestMapping("/game_view/{gPlayer_Id}")
+    public Map<String, Object> getGameView(@PathVariable Long gPlayer_Id) {
+        GamePlayer myGPlayer = gamePlayerRepo.findOne(gPlayer_Id);
+        Map<String, Object> gameViewDTO = new LinkedHashMap<String, Object>();
+        gameViewDTO .put("id", myGPlayer.getGame().getId());
+        gameViewDTO .put("created", myGPlayer.getGame().getcDate());
+        gameViewDTO .put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
+        gameViewDTO .put("ships", myGPlayer.allShips);
+
+        return gameViewDTO ;
 
 
 
+    }
 
-
-
-    
 }
