@@ -25,7 +25,7 @@ public class SalvoController {
     @RequestMapping("/games")
 //    public List<Game> getAll() { return gameRepo.findAll();}
     public List<Object> getAllGames() {
-        System.out.println("in getAllGames");
+
         return gameRepo
                 .findAll()
                 .stream()
