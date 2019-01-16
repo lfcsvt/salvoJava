@@ -74,12 +74,24 @@ public class SalvoController {
         gameViewDTO .put("id", myGPlayer.getGame().getId());
         gameViewDTO .put("created", myGPlayer.getGame().getcDate());
         gameViewDTO .put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
-        gameViewDTO .put("ships", myGPlayer.allShips);
+        gameViewDTO .put("ships", makeShipsDTO(myGPlayer));
 
         return gameViewDTO ;
 
 
 
+    }
+
+    private List<Object> makeShipsDTO(GamePlayer myGPlayer) {
+        List<Object> myGPShips = new ArrayList<>();
+            myGPlayer.allShips.forEach(elem ->{
+                System.out.println(elem);
+                myGPShips.add(new LinkedHashMap<String, Object>() {{
+                    put("type", elem.getType());
+                    put("locations", elem.getLocations());
+                }});
+            });
+            return myGPShips;
     }
 
 }

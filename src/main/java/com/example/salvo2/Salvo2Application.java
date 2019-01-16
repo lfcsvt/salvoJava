@@ -63,13 +63,59 @@ public class Salvo2Application {
 			ship3.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3", "A4")));
 			gp1.makeShip(ship3);
 			Ship ship4 = new Ship("Battleship");
+			ship4.setLocations(new ArrayList<String>(Arrays.asList("B2", "B3", "B4", "B5")));
+			gp1.makeShip(ship4);
 			Ship ship5 = new Ship("Patrol Boat");
+			ship5.setLocations(new ArrayList<String>(Arrays.asList("M2", "M3")));
+			gp1.makeShip(ship5);
+
+			Ship ship6 = new Ship("Carrier");
+			ship6.setLocations(new ArrayList<String>(Arrays.asList("I2", "I3", "I4","I5","I6")));
+			gp2.makeShip(ship6);
+			Ship ship7 = new Ship("Submarine");
+			ship7.setLocations(new ArrayList<String>(Arrays.asList("F2", "F3", "F4")));
+			gp2.makeShip(ship7);
+			Ship ship8 = new Ship("Destroyer");
+			ship8.setLocations(new ArrayList<String>(Arrays.asList("N2", "N3", "N4")));
+			gp2.makeShip(ship8);
+			Ship ship9 = new Ship("Battleship");
+			ship9.setLocations(new ArrayList<String>(Arrays.asList("L2", "L3", "L4", "L5")));
+			gp2.makeShip(ship9);
+			Ship ship10 = new Ship("Patrol Boat");
+			ship10.setLocations(new ArrayList<String>(Arrays.asList("M2", "M3")));
+			gp2.makeShip(ship10);
+
+			Ship ship11 = new Ship("Carrier");
+			ship11.setLocations(new ArrayList<String>(Arrays.asList("I2", "I3", "I4","I5","I6")));
+			gp3.makeShip(ship11);
+			Ship ship12 = new Ship("Submarine");
+			ship12.setLocations(new ArrayList<String>(Arrays.asList("F2", "F3", "F4")));
+			gp3.makeShip(ship12);
+			Ship ship13 = new Ship("Destroyer");
+			ship13.setLocations(new ArrayList<String>(Arrays.asList("N2", "N3", "N4")));
+			gp3.makeShip(ship13);
+			Ship ship14 = new Ship("Battleship");
+			ship14.setLocations(new ArrayList<String>(Arrays.asList("L2", "L3", "L4", "L5")));
+			gp3.makeShip(ship14);
+			Ship ship15 = new Ship("Patrol Boat");
+			ship15.setLocations(new ArrayList<String>(Arrays.asList("M2", "M3")));
+			gp3.makeShip(ship15);
+
 			shipRepository.save(ship1);
 			shipRepository.save(ship2);
 			shipRepository.save(ship3);
 			shipRepository.save(ship4);
 			shipRepository.save(ship5);
-
+			shipRepository.save(ship6);
+			shipRepository.save(ship7);
+			shipRepository.save(ship8);
+			shipRepository.save(ship9);
+			shipRepository.save(ship10);
+			shipRepository.save(ship11);
+			shipRepository.save(ship12);
+			shipRepository.save(ship13);
+			shipRepository.save(ship14);
+			shipRepository.save(ship15);
 		};
 	}
 }
