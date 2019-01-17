@@ -74,28 +74,36 @@ public class SalvoController {
     public Map<String, Object> getGameView(@PathVariable Long gPlayer_Id) {
         GamePlayer myGPlayer = gamePlayerRepo.findOne(gPlayer_Id);
         Map<String, Object> gameViewDTO = new LinkedHashMap<String, Object>();
-        gameViewDTO .put("Game_id", myGPlayer.getGame().getId());
-        gameViewDTO .put("gPlayer_id", myGPlayer.getPlayer().getId());
-        gameViewDTO .put("created", myGPlayer.getGame().getcDate());
-        gameViewDTO .put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
-        gameViewDTO .put("ships", makeShipsDTO(myGPlayer));
+        gameViewDTO.put("Game_id", myGPlayer.getGame().getId());
+        gameViewDTO.put("gPlayer_id", myGPlayer.getPlayer().getId());
+        gameViewDTO.put("created", myGPlayer.getGame().getcDate());
+        gameViewDTO.put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
+        gameViewDTO.put("ships", makeShipsDTO(myGPlayer));
+        gameViewDTO.put("salvoes", makeSalvoesDTO(myGPlayer));
 
-        return gameViewDTO ;
-
-
-
+        return gameViewDTO;
     }
 
     private List<Object> makeShipsDTO(GamePlayer myGPlayer) {
         List<Object> myGPShips = new ArrayList<>();
-            myGPlayer.allShips.forEach(elem ->{
-                System.out.println(elem);
-                myGPShips.add(new LinkedHashMap<String, Object>() {{
-                    put("type", elem.getType());
-                    put("locations", elem.getLocations());
-                }});
-            });
-            return myGPShips;
+        myGPlayer.allShips.forEach(elem -> {
+            myGPShips.add(new LinkedHashMap<String, Object>() {{
+                put("type", elem.getType());
+                put("locations", elem.getLocations());
+            }});
+        });
+        return myGPShips;
     }
 
+    private List<Object> makeSalvoesDTO(GamePlayer myGPlayer) {
+        List<Object> myGPSalvoes = new ArrayList<>();
+        myGPlayer.allSalvoes.forEach(elem -> {
+            myGPSalvoes.add(new LinkedHashMap<String, Object>() {{
+                put("turn", elem.getTurn());
+                put("player", elem.getGamePlayer().getPlayer().getId());
+                put("locations", elem.getLocations());
+            }});
+        });
+        return myGPSalvoes;
+    }
 }
