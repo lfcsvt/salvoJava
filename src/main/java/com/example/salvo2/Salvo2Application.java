@@ -54,19 +54,19 @@ public class Salvo2Application {
 			gamePlayerRepository.save(gp5);
 
 			Ship ship1 = new Ship("Carrier");
-			ship1.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3", "H4","H5","H6")));
+			ship1.setLocations(new ArrayList<String>(Arrays.asList("B10", "C10", "D10","E10","F10")));
 			gp1.makeShip(ship1);
 			Ship ship2 = new Ship("Submarine");
 			ship2.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3", "A4")));
 			gp1.makeShip(ship2);
 			Ship ship3 = new Ship("Destroyer");
-			ship3.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3", "A4")));
+			ship3.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3", "H4")));
 			gp1.makeShip(ship3);
 			Ship ship4 = new Ship("Battleship");
-			ship4.setLocations(new ArrayList<String>(Arrays.asList("B2", "B3", "B4", "B5")));
+			ship4.setLocations(new ArrayList<String>(Arrays.asList("C2", "D2", "E2", "F2")));
 			gp1.makeShip(ship4);
 			Ship ship5 = new Ship("Patrol Boat");
-			ship5.setLocations(new ArrayList<String>(Arrays.asList("M2", "M3")));
+			ship5.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
 			gp1.makeShip(ship5);
 
 			Ship ship6 = new Ship("Carrier");
@@ -76,13 +76,13 @@ public class Salvo2Application {
 			ship7.setLocations(new ArrayList<String>(Arrays.asList("F2", "F3", "F4")));
 			gp2.makeShip(ship7);
 			Ship ship8 = new Ship("Destroyer");
-			ship8.setLocations(new ArrayList<String>(Arrays.asList("N2", "N3", "N4")));
+			ship8.setLocations(new ArrayList<String>(Arrays.asList("C2", "C3", "C4")));
 			gp2.makeShip(ship8);
 			Ship ship9 = new Ship("Battleship");
-			ship9.setLocations(new ArrayList<String>(Arrays.asList("L2", "L3", "L4", "L5")));
+			ship9.setLocations(new ArrayList<String>(Arrays.asList("D2", "D3", "D4", "D5")));
 			gp2.makeShip(ship9);
 			Ship ship10 = new Ship("Patrol Boat");
-			ship10.setLocations(new ArrayList<String>(Arrays.asList("M2", "M3")));
+			ship10.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3")));
 			gp2.makeShip(ship10);
 
 			Ship ship11 = new Ship("Carrier");
@@ -92,13 +92,13 @@ public class Salvo2Application {
 			ship12.setLocations(new ArrayList<String>(Arrays.asList("F2", "F3", "F4")));
 			gp3.makeShip(ship12);
 			Ship ship13 = new Ship("Destroyer");
-			ship13.setLocations(new ArrayList<String>(Arrays.asList("N2", "N3", "N4")));
+			ship13.setLocations(new ArrayList<String>(Arrays.asList("C2", "C3", "C4")));
 			gp3.makeShip(ship13);
 			Ship ship14 = new Ship("Battleship");
-			ship14.setLocations(new ArrayList<String>(Arrays.asList("L2", "L3", "L4", "L5")));
+			ship14.setLocations(new ArrayList<String>(Arrays.asList("E2", "E3", "E4", "E5")));
 			gp3.makeShip(ship14);
 			Ship ship15 = new Ship("Patrol Boat");
-			ship15.setLocations(new ArrayList<String>(Arrays.asList("M2", "M3")));
+			ship15.setLocations(new ArrayList<String>(Arrays.asList("B8", "B9")));
 			gp3.makeShip(ship15);
 
 			shipRepository.save(ship1);

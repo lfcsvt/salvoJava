@@ -71,7 +71,8 @@ public class SalvoController {
     public Map<String, Object> getGameView(@PathVariable Long gPlayer_Id) {
         GamePlayer myGPlayer = gamePlayerRepo.findOne(gPlayer_Id);
         Map<String, Object> gameViewDTO = new LinkedHashMap<String, Object>();
-        gameViewDTO .put("id", myGPlayer.getGame().getId());
+        gameViewDTO .put("Game_id", myGPlayer.getGame().getId());
+        gameViewDTO .put("gPlayer_id", myGPlayer.getPlayer().getId());
         gameViewDTO .put("created", myGPlayer.getGame().getcDate());
         gameViewDTO .put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
         gameViewDTO .put("ships", makeShipsDTO(myGPlayer));
