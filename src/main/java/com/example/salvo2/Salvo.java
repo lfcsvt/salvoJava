@@ -18,7 +18,7 @@ public class Salvo {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    private long turn;
+    private int turn;
 
 
     @ElementCollection
@@ -31,7 +31,7 @@ public class Salvo {
 
     public Salvo() { }
 
-    public Salvo(Long id) {
+    public Salvo(int turn) {
         id = getId();
         this.turn = turn;
     }
@@ -40,7 +40,7 @@ public class Salvo {
         return id;
     }
 
-    public void setTurn(long turn) {
+    public void setTurn(int turn) {
         this.turn = turn;
     }
 

@@ -22,6 +22,9 @@ public class SalvoController {
     @Autowired
     private ShipRepository shipRepo;
 
+    @Autowired
+    private SalvoRepository salvoRepo;
+
     @RequestMapping("/games")
 //    public List<Game> getAll() { return gameRepo.findAll();}
     public List<Object> getAllGames() {
