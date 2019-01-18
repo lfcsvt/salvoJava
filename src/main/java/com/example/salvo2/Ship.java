@@ -60,7 +60,7 @@ public class Ship {
         this.shipType = shipType;
     }
 
-    public List<String> getLocations() {
+    public List<String> getShipLocations() {
         return locations;
     }
 

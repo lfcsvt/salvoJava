@@ -135,35 +135,35 @@ public class Salvo2Application {
 			gp1.makeSalvo(slv5);
 
 			Salvo slv6 = new Salvo(1);
-			slv1.setLocations(new ArrayList<String>(Arrays.asList("B10", "C10")));
+			slv6.setLocations(new ArrayList<String>(Arrays.asList("B10", "C10")));
 			gp2.makeSalvo(slv6);
 			Salvo slv7 = new Salvo(2);
-			slv2.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3")));
+			slv7.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3")));
 			gp2.makeSalvo(slv7);
 			Salvo slv8 = new Salvo(3);
-			slv3.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3")));
+			slv8.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3")));
 			gp2.makeSalvo(slv8);
 			Salvo slv9 = new Salvo(4);
-			slv4.setLocations(new ArrayList<String>(Arrays.asList("C2", "D2")));
+			slv9.setLocations(new ArrayList<String>(Arrays.asList("C2", "D2")));
 			gp2.makeSalvo(slv9);
 			Salvo slv10 = new Salvo(5);
-			slv5.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
+			slv10.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
 			gp2.makeSalvo(slv10);
 
 			Salvo slv11 = new Salvo(1);
-			slv1.setLocations(new ArrayList<String>(Arrays.asList("D10", "E10")));
+			slv11.setLocations(new ArrayList<String>(Arrays.asList("D10", "E10")));
 			gp3.makeSalvo(slv11);
 			Salvo slv12 = new Salvo(2);
-			slv2.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3")));
+			slv12.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3")));
 			gp3.makeSalvo(slv12);
 			Salvo slv13 = new Salvo(3);
-			slv3.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3")));
+			slv13.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3")));
 			gp3.makeSalvo(slv13);
 			Salvo slv14 = new Salvo(4);
-			slv4.setLocations(new ArrayList<String>(Arrays.asList("E2", "D2")));
+			slv14.setLocations(new ArrayList<String>(Arrays.asList("I7", "J7")));
 			gp3.makeSalvo(slv14);
 			Salvo slv15 = new Salvo(5);
-			slv5.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
+			slv15.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
 			gp3.makeSalvo(slv15);
 
 

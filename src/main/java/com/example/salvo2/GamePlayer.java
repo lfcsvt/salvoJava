@@ -76,6 +76,14 @@ public class GamePlayer {
         return allShips;
     }
 
+    public void setAllSalvoes(Set<Salvo> allSalvoes) {
+        this.allSalvoes = allSalvoes;
+    }
+
+    public Set<Salvo> getAllSalvos() {
+        return allSalvoes;
+    }
+
     public void makeShip(Ship ship) {
         ship.setGamePlayer(this);
         allShips.add(ship);

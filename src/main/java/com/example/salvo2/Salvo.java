@@ -56,7 +56,7 @@ public class Salvo {
         this.gamePlayer = gamePlayer;
     }
 
-    public List<String> getLocations() {
+    public List<String> getSalvoLocations() {
         return locations;
     }
 

@@ -57,16 +57,13 @@ public class SalvoController {
         game.gamePlayers
                 .stream()
                 .forEach(gamePlayer -> {
-                    System.out.println(gamePlayer.toString());
                     gPlayerDataObject.add(new LinkedHashMap<String, Object>() {{
                                               put("gp_id", gamePlayer.getId());
                                               put("player", makePlayerDTO(gamePlayer.getPlayer()));
+
                                           }}
                     );
                 });
-        System.out.println("gPlayerDataObject");
-        System.out.println(gPlayerDataObject);
-        System.out.println(gPlayerDataObject);
         return gPlayerDataObject;
     }
 
@@ -79,7 +76,7 @@ public class SalvoController {
         gameViewDTO.put("created", myGPlayer.getGame().getcDate());
         gameViewDTO.put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
         gameViewDTO.put("ships", makeShipsDTO(myGPlayer));
-        gameViewDTO.put("salvoes", makeSalvoesDTO(myGPlayer));
+        gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
 
         return gameViewDTO;
     }
@@ -89,7 +86,7 @@ public class SalvoController {
         myGPlayer.allShips.forEach(elem -> {
             myGPShips.add(new LinkedHashMap<String, Object>() {{
                 put("type", elem.getType());
-                put("locations", elem.getLocations());
+                put("ships_locations", elem.getShipLocations());
             }});
         });
         return myGPShips;
@@ -100,10 +97,34 @@ public class SalvoController {
         myGPlayer.allSalvoes.forEach(elem -> {
             myGPSalvoes.add(new LinkedHashMap<String, Object>() {{
                 put("turn", elem.getTurn());
-                put("player", elem.getGamePlayer().getPlayer().getId());
-                put("locations", elem.getLocations());
+//                put("player", elem.getGamePlayer().getPlayer().getId());
+                put("salvoes_locations",elem.getSalvoLocations());
+
             }});
         });
         return myGPSalvoes;
     }
+
+    private Map<String, Object> getPlayerSalvos(GamePlayer gamePlayer) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("id", gamePlayer.getPlayer());
+        return dto;
+    }
+
+    public List<Object> getSPlayer(Game game) {
+        List<Object> gPlayerDataObject = new ArrayList<>();
+        game.gamePlayers
+                .stream()
+                .forEach(gamePlayer -> {
+                    gPlayerDataObject.add(new LinkedHashMap<String, Object>() {{
+                                              put("gp_id", gamePlayer.getId());
+                                              put("gp_salvoes", makeSalvoesDTO(gamePlayer));
+
+
+                                          }}
+                    );
+                });
+        return gPlayerDataObject;
+    }
+
 }
