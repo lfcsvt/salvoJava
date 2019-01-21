@@ -76,14 +76,14 @@ public class SalvoController {
         gameViewDTO.put("created", myGPlayer.getGame().getcDate());
         gameViewDTO.put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
         gameViewDTO.put("ships", makeShipsDTO(myGPlayer));
-        gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
+      gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
 
         return gameViewDTO;
     }
 
     private List<Object> makeShipsDTO(GamePlayer myGPlayer) {
         List<Object> myGPShips = new ArrayList<>();
-        myGPlayer.allShips.forEach(elem -> {
+        myGPlayer.getAllShips().forEach(elem -> {
             myGPShips.add(new LinkedHashMap<String, Object>() {{
                 put("type", elem.getType());
                 put("ships_locations", elem.getShipLocations());
@@ -94,7 +94,7 @@ public class SalvoController {
 
     private List<Object> makeSalvoesDTO(GamePlayer myGPlayer) {
         List<Object> myGPSalvoes = new ArrayList<>();
-        myGPlayer.allSalvoes.forEach(elem -> {
+        myGPlayer.getAllSalvos().forEach(elem -> {
             myGPSalvoes.add(new LinkedHashMap<String, Object>() {{
                 put("turn", elem.getTurn());
 //                put("player", elem.getGamePlayer().getPlayer().getId());
@@ -120,11 +120,9 @@ public class SalvoController {
                                               put("gp_id", gamePlayer.getId());
                                               put("gp_salvoes", makeSalvoesDTO(gamePlayer));
 
-
                                           }}
                     );
                 });
         return gPlayerDataObject;
     }
-
 }

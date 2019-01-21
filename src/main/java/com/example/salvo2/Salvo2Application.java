@@ -19,7 +19,9 @@ public class Salvo2Application {
 	public CommandLineRunner initData(PlayerRepository playerRepository,
 											GameRepository gameRepository,
 											GamePlayerRepository gamePlayerRepository,
-									  ShipRepository shipRepository, SalvoRepository salvoRepository) {
+									  		ShipRepository shipRepository,
+									  		SalvoRepository salvoRepository,
+									  		ScoreRepository scoreRepository) {
 		return (args) -> {
 			Player p1 = new Player ("Jack", "Bauer", "j.bauer@ctu.gov");
 			Player p2 = new Player ("Chloe", "O'Brian", "c.brian@ctu.gov");
@@ -119,35 +121,35 @@ public class Salvo2Application {
 
 
 			Salvo slv1 = new Salvo(1);
-			slv1.setLocations(new ArrayList<String>(Arrays.asList("B10", "C10")));
+			slv1.setLocations(new ArrayList<String>(Arrays.asList("A10", "F3")));
 			gp1.makeSalvo(slv1);
 			Salvo slv2 = new Salvo(2);
-			slv2.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3")));
+			slv2.setLocations(new ArrayList<String>(Arrays.asList("A7", "A8")));
 			gp1.makeSalvo(slv2);
 			Salvo slv3 = new Salvo(3);
-			slv3.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3")));
+			slv3.setLocations(new ArrayList<String>(Arrays.asList("H5", "H6")));
 			gp1.makeSalvo(slv3);
 			Salvo slv4 = new Salvo(4);
-			slv4.setLocations(new ArrayList<String>(Arrays.asList("C2", "D2")));
+			slv4.setLocations(new ArrayList<String>(Arrays.asList("C2", "D9")));
 			gp1.makeSalvo(slv4);
 			Salvo slv5 = new Salvo(5);
-			slv5.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
+			slv5.setLocations(new ArrayList<String>(Arrays.asList("J8", "I4")));
 			gp1.makeSalvo(slv5);
 
 			Salvo slv6 = new Salvo(1);
-			slv6.setLocations(new ArrayList<String>(Arrays.asList("B10", "C10")));
+			slv6.setLocations(new ArrayList<String>(Arrays.asList("B10", "A2")));
 			gp2.makeSalvo(slv6);
 			Salvo slv7 = new Salvo(2);
-			slv7.setLocations(new ArrayList<String>(Arrays.asList("A2", "A3")));
+			slv7.setLocations(new ArrayList<String>(Arrays.asList("C10", "A3")));
 			gp2.makeSalvo(slv7);
 			Salvo slv8 = new Salvo(3);
-			slv8.setLocations(new ArrayList<String>(Arrays.asList("H2", "H3")));
+			slv8.setLocations(new ArrayList<String>(Arrays.asList("C2", "H3")));
 			gp2.makeSalvo(slv8);
 			Salvo slv9 = new Salvo(4);
-			slv9.setLocations(new ArrayList<String>(Arrays.asList("C2", "D2")));
+			slv9.setLocations(new ArrayList<String>(Arrays.asList("H2", "D6")));
 			gp2.makeSalvo(slv9);
 			Salvo slv10 = new Salvo(5);
-			slv10.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
+			slv10.setLocations(new ArrayList<String>(Arrays.asList("J2", "F6")));
 			gp2.makeSalvo(slv10);
 
 			Salvo slv11 = new Salvo(1);
@@ -163,7 +165,7 @@ public class Salvo2Application {
 			slv14.setLocations(new ArrayList<String>(Arrays.asList("I7", "J7")));
 			gp3.makeSalvo(slv14);
 			Salvo slv15 = new Salvo(5);
-			slv15.setLocations(new ArrayList<String>(Arrays.asList("J2", "J3")));
+			slv15.setLocations(new ArrayList<String>(Arrays.asList("J5", "J6")));
 			gp3.makeSalvo(slv15);
 
 
@@ -182,6 +184,22 @@ public class Salvo2Application {
 			salvoRepository.save(slv13);
 			salvoRepository.save(slv14);
 			salvoRepository.save(slv15);
+
+			Score sc1 = new Score(p1, g1, 1.0);
+			Score sc2 = new Score(p2, g1, 0.0);
+			Score sc3 = new Score(p1, g2, 0.5);
+			Score sc4 = new Score(p2, g2, 0.5);
+			Score sc5 = new Score(p2, g3, 1.0);
+			Score sc6 = new Score(p4, g3, 0.0);
+
+
+			scoreRepository.save(sc1);
+			scoreRepository.save(sc2);
+			scoreRepository.save(sc3);
+			scoreRepository.save(sc4);
+			scoreRepository.save(sc5);
+			scoreRepository.save(sc6);
+
 
 		};
 	}

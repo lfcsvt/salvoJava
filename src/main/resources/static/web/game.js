@@ -20,6 +20,10 @@ function main(slvGames){
    addPlayerInfo(slvGames)
    placeShips(slvGames)
    placeSalvoes(slvGames)
+   placeSHits(slvGames)
+   myOpponentHits(slvGames)
+//   enemyShips(slvGames)
+
 }
 
 function makeGrid(){
@@ -56,26 +60,20 @@ var tblBody = document.getElementById("salvo-tBody")
 var tbl = document.getElementById("salvo-table");
 var letArr = ["A", "B" ,"C" ,"D" ,"E","F", "G", "H", "I", "J" ]
 var numArr = [1, 2 ,3 ,4 , 5, 6, 7, 8, 9, 10 ]
-// create the row for out table
 var row = document.createElement("tr");
     tblBody.innerHTML = ""
     for (var i = 0; i < letArr.length; i++) {
-//        row.setAttribute("id",letArr[i])
         var letter = letArr[i]
         var blank = " "
         var row = document.createElement("tr");
         var td = document.createElement("td");
-
         row.insertCell().innerHTML = letter
-
         for(var j = 0 ; j< numArr.length; j++){
               var td = document.createElement("td");
               td.setAttribute("id","S" + letArr[i] + numArr[j])
             row.appendChild(td)
         }
-
         tblBody.appendChild(row);
-
     }
     tbl.appendChild(tblBody);
 }
@@ -126,16 +124,123 @@ function placeSalvoes(slvGames){
                 elem2.salvoes_locations.forEach(place => {
                     var slvSeg = document.getElementById("S" + place)
                        if(slvSeg.id == "S" + place){
-                            slvSeg.setAttribute("style", "background-color: red;");
+                             let hitDiv = document.createElement("div")
+                             hitDiv.setAttribute("class", "hit-div")
                             let x = elem2.turn;
-                            console.log(x)
-//                            console.log(elem2)
-
+                           let text = document.createElement("p")
+                           var t = document.createTextNode(x);
+                           text.appendChild(t)
+                           hitDiv.appendChild(text)
+                           slvSeg.appendChild(hitDiv)
                     }
                 })
             })
         }
     })
 }
+
+
+function placeSHits(slvGames){
+    let turn = document.createElement("p");
+    let arr = slvGames.salvoes
+    let user_id = slvGames.gPlayer_id
+    arr.forEach(elem => {
+        if(elem.gp_id !== user_id){
+            elem.gp_salvoes.forEach(elem2 => {
+                elem2.salvoes_locations.forEach(place => {
+                    var slvSeg = document.getElementById( place)
+                       if(slvSeg.id ==  place){
+                            let hitDiv = document.createElement("div")
+                            hitDiv.setAttribute("class", "hit-div")
+                           let x = elem2.turn;
+                           let text = document.createElement("p")
+                           var t = document.createTextNode(x);
+                           text.appendChild(t)
+                           hitDiv.appendChild(text)
+                           slvSeg.appendChild(hitDiv)
+                    }
+                })
+            })
+        }
+    })
+}
+
+function myOpponentHits(slvGames){
+    let arr = slvGames.salvoes
+    let arr2 = slvGames.ships
+    let shipLocArr = []
+    let slvLocArr = []
+    let user_id = slvGames.gPlayer_id
+    arr2.forEach(elem => {
+        elem.ships_locations.forEach(elem2 => {
+            shipLocArr.push(elem2)
+        })
+    })
+    arr.forEach(elem =>{
+        if(elem.gp_id !== user_id){
+            elem.gp_salvoes.forEach(elem2 =>{
+            elem2.salvoes_locations.forEach(elem3 => {
+                 let a = shipLocArr.filter(loc => loc == elem3)
+                 if(a.length > 0){
+                   a.forEach(hit => {
+                        let div_id = hit
+                        let divHit = document.getElementById(hit)
+                        divHit.firstChild.setAttribute("style", "background-color: red")
+                   })
+
+                 }
+            })
+
+            })
+        }
+    })
+}
+
+//function enemyShips(slvGames){
+//    let arr = slvGames.salvoes
+//    let shipLocArr = []
+//    let slvLocArr = []
+//    let user_id = slvGames.gPlayer_id
+//
+//        slvGames.gamePlayer.forEach(elem => {
+//
+//            if(elem.gp_id !== user_id){
+//                fetch( 'http://localhost:8080/api/game_view/' + elem.gp_id)
+//                 .then(response => response.json())
+//                 .then(response => {
+//                 var enemyShips = response.ships
+//                 enemyShips.forEach(elem => {
+//                 elem.ships_locations.forEach(loc => {
+//                    shipLocArr.push(loc)
+//                 } )
+//
+//                 })
+//
+//                 slvGames.salvoes.forEach(slv => {
+//                      if(slv.gp_id == user_id){
+//                        slv.gp_salvoes.forEach(place => {
+//                             place.salvoes_locations.forEach(slvPlace => {
+//                                let a = shipLocArr.filter(element => element == slvPlace)
+//                                if(a.length > 0){
+//                                    a.forEach(hit => {
+//                                    let div_id = "S" + hit
+//                                    let divHit = document.getElementById("S" + hit)
+//                                    divHit.firstChild.setAttribute("style", "background-color: red")
+//                                    })
+//
+//                                }
+//                             })
+//                        })
+//
+//                      }
+//               })
+//
+//            })
+//        }
+//    })
+//
+//}
+
+
 
 
