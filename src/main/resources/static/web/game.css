@@ -5,12 +5,14 @@ table{
   margin-bottom: 50px;
   margin-left: 50px;
 
+
 }
 
 td, th {
     border: 1px solid black;
     width: 30px !important;
     height 30px !important;
+
 }
 
 

@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.HashMap;
 import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class SalvoController {
         gameViewDTO.put("created", myGPlayer.getGame().getcDate());
         gameViewDTO.put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
         gameViewDTO.put("ships", makeShipsDTO(myGPlayer));
-      gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
+        gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
 
         return gameViewDTO;
     }
@@ -125,4 +126,18 @@ public class SalvoController {
                 });
         return gPlayerDataObject;
     }
+
+    @RequestMapping("/leaderboard")
+    public List<Object> getLeaderBoard() {
+        return playerRepo.findAll().stream()
+                .map(player -> new HashMap<String, Object>(){{
+                    put("player_id", player.getId());
+                    put("player_name", player.getFirstName());
+                    put("scores", player.allScores
+                            .stream()
+                            .map(score -> score.getScore())
+                            .collect(Collectors.toList()));
+                }}).collect(Collectors.toList());
+    }
+
 }

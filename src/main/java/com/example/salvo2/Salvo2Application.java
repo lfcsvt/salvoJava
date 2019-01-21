@@ -190,7 +190,7 @@ public class Salvo2Application {
 			Score sc3 = new Score(p1, g2, 0.5);
 			Score sc4 = new Score(p2, g2, 0.5);
 			Score sc5 = new Score(p2, g3, 1.0);
-			Score sc6 = new Score(p4, g3, 0.0);
+			Score sc6 = new Score(p3, g3, 0.0);
 
 
 			scoreRepository.save(sc1);
