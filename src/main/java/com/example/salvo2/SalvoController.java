@@ -26,6 +26,9 @@ public class SalvoController {
     @Autowired
     private SalvoRepository salvoRepo;
 
+    @Autowired
+    private ScoreRepository scoreRepo;
+
     @RequestMapping("/games")
 //    public List<Game> getAll() { return gameRepo.findAll();}
     public List<Object> getAllGames() {
@@ -42,6 +45,7 @@ public class SalvoController {
         dto.put("id", game.getId());
         dto.put("created", game.getcDate());
         dto.put("gamePlayers", getGamePlayer(game));
+//        dto.put("allPScores", getAllScores());
         return dto;
     }
 
@@ -61,7 +65,7 @@ public class SalvoController {
                     gPlayerDataObject.add(new LinkedHashMap<String, Object>() {{
                                               put("gp_id", gamePlayer.getId());
                                               put("player", makePlayerDTO(gamePlayer.getPlayer()));
-
+//                                              put("score", gamePlayer.getGPScore().getScore());
                                           }}
                     );
                 });
@@ -128,7 +132,7 @@ public class SalvoController {
     }
 
     @RequestMapping("/leaderboard")
-    public List<Object> getLeaderBoard() {
+    public List<Object> leaderboard() {
         return playerRepo.findAll().stream()
                 .map(player -> new HashMap<String, Object>(){{
                     put("player_id", player.getId());
@@ -139,5 +143,6 @@ public class SalvoController {
                             .collect(Collectors.toList()));
                 }}).collect(Collectors.toList());
     }
+
 
 }

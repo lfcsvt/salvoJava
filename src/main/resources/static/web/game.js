@@ -1,27 +1,32 @@
-
-function getPlayerData(){
-var urlParams = new URLSearchParams(window.location.search);
-var myParam = urlParams.get('gp');
-var url = 'http://localhost:8080/api/game_view/' + myParam
-    fetch( url)
-            .then(response => response.json())
-            .then(response => {
-                var slvGames = response
-                console.log(slvGames)
-                main (slvGames)
-            })
-
-            .catch(err => console.log(err));
-}
 makeGrid()
 makeSGrid()
-getPlayerData()
-function main(slvGames){
+getData()
+
+ function getData() {
+ var urlParams = new URLSearchParams(window.location.search);
+ var myParam = urlParams.get('gp');
+ var url1 = 'http://localhost:8080/api/game_view/' + myParam ;
+        var urls = [url1, "http://localhost:8080/api/leaderboard"]
+        let responseArray = urls.map((url) => {
+          let request = new Request(url, {
+          });
+          return fetch(request).then(response => response.json());
+        });
+
+        Promise.all(responseArray).then(allResults => {
+          console.log(allResults)
+          let slvGames  = allResults[0]
+          let leaderboard  = allResults[1]
+                          main (slvGames, leaderboard)
+        })
+      }
+function main(slvGames, leaderboard){
    addPlayerInfo(slvGames)
    placeShips(slvGames)
    placeSalvoes(slvGames)
    placeSHits(slvGames)
    myOpponentHits(slvGames)
+   createLBoard(leaderboard)
 //   enemyShips(slvGames)
 
 }
@@ -194,6 +199,36 @@ function myOpponentHits(slvGames){
             })
         }
     })
+}
+
+function createLBoard(leaderboard){
+var lTable = document.getElementById("leader-table")
+    leaderboard.forEach(player => {
+    console.log(player);
+     var  count = {};
+     player.scores.forEach(function(i) { count[i] = (count[i]||0) + 1;});
+       let total = player.scores.reduce((a, b) => a + b, 0)
+        let row = document.createElement("tr")
+        let won = count[1]
+        let lost = count[0]
+        let tied = count[0.5]
+        row.insertCell().innerHTML = player.player_name
+        row.insertCell().innerHTML = total
+        if(won == undefined || lost == undefined || tied == undefined){
+            won = "xxx"
+            lost = "xxx"
+            tied = "xxx"
+              row.insertCell().innerHTML = won
+              row.insertCell().innerHTML = lost
+              row.insertCell().innerHTML = tied
+        } else {
+             row.insertCell().innerHTML = won
+             row.insertCell().innerHTML = lost
+             row.insertCell().innerHTML = tied
+        }
+    lTable.appendChild(row)
+    })
+
 }
 
 //function enemyShips(slvGames){

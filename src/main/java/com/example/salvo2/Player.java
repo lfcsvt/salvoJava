@@ -1,4 +1,5 @@
 package com.example.salvo2;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -71,8 +72,23 @@ public class Player {
         gamePlayers.add(gamePlayer);
     }
 
-    public void getPlayerScore(Score score){
-        score.setPlayer(this);
-        allScores.add(score);
+    public Score getScore(Game game) {
+        for (Score score: allScores) {
+            if (score.getGame() == game) {
+                return score;
+            }
+        }
+        return null;
+    }
+
+    public Set<Score> getAllScores() { return allScores; }
+
+
+    public void setAllScores(Set<Score> allScores) {
+        this.allScores = allScores;
+    }
+
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
     }
 }

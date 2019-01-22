@@ -1,4 +1,5 @@
 package com.example.salvo2;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -45,6 +46,7 @@ public class Score {
     public void setId(long id) {
         this.id = id;
     }
+
 
     public Double getScore() {
         return score;

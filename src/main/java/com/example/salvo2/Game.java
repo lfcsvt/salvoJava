@@ -46,10 +46,7 @@ public class Game {
         gamePlayers.add(gamePlayer);
     }
 
-
-//   public Object getPlayer() {
-//       return this.gamePlayers;
-//   }
-
-
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
 }

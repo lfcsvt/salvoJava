@@ -191,6 +191,10 @@ public class Salvo2Application {
 			Score sc4 = new Score(p2, g2, 0.5);
 			Score sc5 = new Score(p2, g3, 1.0);
 			Score sc6 = new Score(p3, g3, 0.0);
+			Score sc7 = new Score(p2, g1, 1.0);
+			Score sc8 = new Score(p1, g1, 1.0);
+			Score sc9 = new Score(p1, g1, 0.5);
+			Score sc10 = new Score(p1, g1, 0.0);
 
 
 			scoreRepository.save(sc1);
@@ -199,6 +203,10 @@ public class Salvo2Application {
 			scoreRepository.save(sc4);
 			scoreRepository.save(sc5);
 			scoreRepository.save(sc6);
+			scoreRepository.save(sc7);
+			scoreRepository.save(sc8);
+			scoreRepository.save(sc9);
+			scoreRepository.save(sc10);
 
 
 		};

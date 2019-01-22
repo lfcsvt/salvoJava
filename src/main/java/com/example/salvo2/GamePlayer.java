@@ -94,6 +94,10 @@ public class GamePlayer {
         allSalvoes.add(salvo);
     }
 
+    public Score getGPScore() {
+        return player.getScore(this.game);
+
+    }
 
 }
 
