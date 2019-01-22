@@ -215,9 +215,9 @@ var lTable = document.getElementById("leader-table")
         row.insertCell().innerHTML = player.player_name
         row.insertCell().innerHTML = total
         if(won == undefined || lost == undefined || tied == undefined){
-            won = "xxx"
-            lost = "xxx"
-            tied = "xxx"
+            won = " ---"
+            lost = " ---"
+            tied = " ---"
               row.insertCell().innerHTML = won
               row.insertCell().innerHTML = lost
               row.insertCell().innerHTML = tied

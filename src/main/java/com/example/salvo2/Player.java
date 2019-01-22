@@ -19,6 +19,7 @@ public class Player {
     private String firstName;
     private String lastName;
     private String userName;
+    private String userPassword;
 
     @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayers;
@@ -29,10 +30,11 @@ public class Player {
 
     public Player () { }
 
-    public Player (String first, String last, String email) {
+    public Player (String first, String last, String email, String password) {
         firstName = first;
         lastName = last;
         userName = email;
+        userPassword = password;
 
     }
     public long getId() {
@@ -65,6 +67,14 @@ public class Player {
 
     public String toString() {
         return userName;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public void addGamePlayer(GamePlayer gamePlayer) {
