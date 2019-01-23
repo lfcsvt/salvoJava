@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +34,35 @@ public class SalvoController {
     private ScoreRepository scoreRepo;
 
     @RequestMapping("/games")
-//    public List<Game> getAll() { return gameRepo.findAll();}
-    public List<Object> getAllGames() {
+    public Map<String, Object> makeGameAuth (Authentication authentication) {
+        Map<String, Object> createGame = new HashMap<>();
+        if (notUser(authentication)) {
+            createGame.put("loggedIn", null);
+            createGame.put("games", getAllGames());
+        } else {
+            Player loggedUser = getLoggedUser(authentication);
+            createGame.put("loggedIn", makePlayerDTO(loggedUser));
+            createGame.put("games", getAllGames());
 
-        return gameRepo
-                .findAll()
+        }
+        return createGame;
+    }
+
+
+    private List<Object> getAllGames() {
+        return gameRepo.findAll()
                 .stream()
                 .map(game -> makeGameDTO(game))
                 .collect(Collectors.toList());
+    }
+    private boolean notUser(Authentication authentication) {
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
+    }
+
+    private Player getLoggedUser(Authentication authentication){
+        return !notUser(authentication)
+                ? playerRepo.findByUserName(authentication.getName())
+                : null;
     }
 
     private Map<String, Object> makeGameDTO(Game game) {
@@ -144,5 +169,30 @@ public class SalvoController {
                 }}).collect(Collectors.toList());
     }
 
+    @RequestMapping(path = "/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> addPlayer(
+            @RequestParam String userName,
+            @RequestParam String fullName,
+            @RequestParam String userPassword) {
+        if (userName == "" || fullName == "" || userPassword == "" ) {
+            return new ResponseEntity<>(makeMap("Error", "All fields must be filled"), HttpStatus.FORBIDDEN);
+        } else if (playerRepo.findByUserName(userName) == null) {
+            if (playerRepo.findByUserName(userName) == null) {
+                playerRepo.save(new Player(fullName, userName, userPassword));
+                return new ResponseEntity<>(makeMap("Success", "Your are now Registered"), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(makeMap("Error", "User already exists"), HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return new ResponseEntity<>(makeMap("Error", "Email is already in use"), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    private Map<String, Object> makeMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", key);
+        map.put("message", value);
+        return map;
+    }
 
 }

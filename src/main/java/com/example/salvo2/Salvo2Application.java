@@ -38,11 +38,11 @@ public class Salvo2Application {
 									  		SalvoRepository salvoRepository,
 									  		ScoreRepository scoreRepository) {
 		return (args) -> {
-			Player p1 = new Player ("Jack", "Bauer", "j.bauer@ctu.gov", "24");
-			Player p2 = new Player ("Chloe", "O'Brian", "c.brian@ctu.gov", "42");
-			Player p3 = new Player ("Kim", "Bauer", "kim_bauer@gmail.com", "kb");
-			Player p4 = new Player ("David", "Palmer" , "t.almeida@ctu.gov", "mole");
-			Player p5 = new Player ("John", "Smith" , "j.smith@ctu.gov","john" );
+			Player p1 = new Player ("Jack Bauer", "j.bauer@ctu.gov", "24");
+			Player p2 = new Player ("Chloe O'Brian", "c.brian@ctu.gov", "42");
+			Player p3 = new Player ("Kim Bauer", "kim_bauer@gmail.com", "kb");
+			Player p4 = new Player ("David Palmer" , "t.almeida@ctu.gov", "mole");
+			Player p5 = new Player ("John Smith" , "j.smith@ctu.gov","john" );
 
 			playerRepository.save(p1);
 			playerRepository.save(p2);
@@ -238,6 +238,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userName-> {
+			System.out.println(userName);
 			Player player = playerRepository.findByUserName(userName);
 			if (player != null) {
 				return new User(player.getUserName(), player.getUserPassword(),
@@ -256,19 +257,19 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-//			.antMatchers("/**").permitAll();
+
 				.antMatchers("/web/games.html").permitAll()
 				.antMatchers("/web/styles/games.css").permitAll()
 				.antMatchers("/web/scripts/games.js").permitAll()
 				.antMatchers("/api/games").permitAll()
+				.antMatchers("/api/login").permitAll()
 				.antMatchers("/api/leaderboard").permitAll()
-				.antMatchers("/api/game_view/*").hasAuthority("ROLE_USER")
-				.antMatchers("/api/games").hasAuthority("ROLE_USER")
-				.antMatchers("/**").hasAuthority("ROLE_USER");
+				.antMatchers("/api/game_view/*").hasAuthority("ROLE_USER");
+//				.antMatchers("/**").hasAuthority("ROLE_USER");
 
 		http.formLogin()
 				.usernameParameter("userName")
-				.passwordParameter("password")
+				.passwordParameter("userPassword")
 				.loginPage("/api/login");
 
 		http.logout()

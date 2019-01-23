@@ -201,35 +201,35 @@ function myOpponentHits(slvGames){
     })
 }
 
-function createLBoard(leaderboard){
-var lTable = document.getElementById("leader-table")
-    leaderboard.forEach(player => {
-    console.log(player);
-     var  count = {};
-     player.scores.forEach(function(i) { count[i] = (count[i]||0) + 1;});
-       let total = player.scores.reduce((a, b) => a + b, 0)
-        let row = document.createElement("tr")
-        let won = count[1]
-        let lost = count[0]
-        let tied = count[0.5]
-        row.insertCell().innerHTML = player.player_name
-        row.insertCell().innerHTML = total
-        if(won == undefined || lost == undefined || tied == undefined){
-            won = " ---"
-            lost = " ---"
-            tied = " ---"
-              row.insertCell().innerHTML = won
-              row.insertCell().innerHTML = lost
-              row.insertCell().innerHTML = tied
-        } else {
-             row.insertCell().innerHTML = won
-             row.insertCell().innerHTML = lost
-             row.insertCell().innerHTML = tied
-        }
-    lTable.appendChild(row)
-    })
-
-}
+//function createLBoard(leaderboard){
+//var lTable = document.getElementById("leader-table")
+//    leaderboard.forEach(player => {
+//    console.log(player);
+//     var  count = {};
+//     player.scores.forEach(function(i) { count[i] = (count[i]||0) + 1;});
+//       let total = player.scores.reduce((a, b) => a + b, 0)
+//        let row = document.createElement("tr")
+//        let won = count[1]
+//        let lost = count[0]
+//        let tied = count[0.5]
+//        row.insertCell().innerHTML = player.player_name
+//        row.insertCell().innerHTML = total
+//        if(won == undefined || lost == undefined || tied == undefined){
+//            won = " ---"
+//            lost = " ---"
+//            tied = " ---"
+//              row.insertCell().innerHTML = won
+//              row.insertCell().innerHTML = lost
+//              row.insertCell().innerHTML = tied
+//        } else {
+//             row.insertCell().innerHTML = won
+//             row.insertCell().innerHTML = lost
+//             row.insertCell().innerHTML = tied
+//        }
+//    lTable.appendChild(row)
+//    })
+//
+//}
 
 //function enemyShips(slvGames){
 //    let arr = slvGames.salvoes

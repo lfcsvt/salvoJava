@@ -32,7 +32,7 @@ public class Salvo {
     public Salvo() { }
 
     public Salvo(int turn) {
-        id = getId();
+        this.id = getId();
         this.turn = turn;
     }
 

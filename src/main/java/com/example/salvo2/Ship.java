@@ -32,8 +32,8 @@ public class Ship {
     public Ship () { }
 
     public Ship(String type) {
-        shipType = type;
-        id = getId();
+        this.shipType = type;
+        this.id = getId();
     }
 
     public long getId() {

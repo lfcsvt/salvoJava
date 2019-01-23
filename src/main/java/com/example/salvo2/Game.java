@@ -27,8 +27,8 @@ public class Game {
     public Game () { }
 
     public Game(Date date) {
-        cDate = date;
-        id = getId();
+        this.cDate = date;
+        this.id = getId();
     }
     public Date getcDate() {
         return cDate;
