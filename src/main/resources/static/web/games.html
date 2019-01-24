@@ -1,28 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-          crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"-->
+          <!--integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"-->
+          <!--crossorigin="anonymous">-->
+    <link rel="stylesheet" href="games.css">
     <meta charset="UTF-8">
     <title>Salvo</title>
 </head>
 <body>
-<div class="container">
-    <form id="player-form" method="POST" action="">
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1"
-                   aria-describedby="emailHelp" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
 
-        <button type="submit" class="btn btn-primary">Log In</button>
-    </form>
-</div>
+<form method="post" action="index.html" id="login">
+    <div class="box">
+        <h1>Join the fight!!!</h1>
+        <label>Email:</label>
+        <input class="email" id="username"/>
+        <label>Password:</label>
+        <input class="email" id="password"/>
+
+        <a href="#"><div class="btn" onclick="login()">Sign In</div></a> <!-- End Btn -->
+
+
+
+
+    </div> <!-- End Box -->
+
+</form>
+
+<form method="post" action="index.html" id="signIn">
+    <div class="box">
+        <h1>Join the fight!!!</h1>
+        <label>Name:</label>
+        <input class="email" id="create-user"/>
+        <label>Email:</label>
+        <input class="email" id="create-username"/>
+        <label>Password:</label>
+        <input class="email" id="create-password"/>
+
+        <!--<a href="#"><div class="btn2" onclick="signIn()">Sign Up</div></a> &lt;!&ndash; End Btn &ndash;&gt;-->
+        <a href="#"><div id="btn2" onclick="signIn()">Sign Up</div></a> <!-- End Btn2 -->
+
+
+    </div> <!-- End Box -->
+
+</form>
 <div class="container">
     <ol id="gameList" class="list-group">
 
@@ -44,6 +65,9 @@
         </tbody>
     </table>
 </div>
+<div class="container">
+    <a href="#"><div id="btn3" onclick="">Join Game</div></a> <!-- End Btn2 -->
+</div>
 
     <script src="games.js"></script>
 <script
@@ -53,15 +77,17 @@
 
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous">
 
-</script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous">
 
-</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"-->
+        <!--integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"-->
+        <!--crossorigin="anonymous">-->
+
+<!--</script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"-->
+        <!--integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"-->
+        <!--crossorigin="anonymous">-->
+
+<!--</script>-->
 </body>
 </html>

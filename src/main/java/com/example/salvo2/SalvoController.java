@@ -98,17 +98,20 @@ public class SalvoController {
     }
 
     @RequestMapping("/game_view/{gPlayer_Id}")
-    public Map<String, Object> getGameView(@PathVariable Long gPlayer_Id) {
+    public Map<String, Object> getGameView(@PathVariable Long gPlayer_Id, Authentication authentication) {
         GamePlayer myGPlayer = gamePlayerRepo.findOne(gPlayer_Id);
-        Map<String, Object> gameViewDTO = new LinkedHashMap<String, Object>();
-        gameViewDTO.put("Game_id", myGPlayer.getGame().getId());
-        gameViewDTO.put("gPlayer_id", myGPlayer.getPlayer().getId());
-        gameViewDTO.put("created", myGPlayer.getGame().getcDate());
-        gameViewDTO.put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
-        gameViewDTO.put("ships", makeShipsDTO(myGPlayer));
-        gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
+//        if(myGPlayer.getPlayer() == loggedUser(authentication)) {
+            Map<String, Object> gameViewDTO = new LinkedHashMap<String, Object>();
+            gameViewDTO.put("Game_id", myGPlayer.getGame().getId());
+            gameViewDTO.put("gPlayer_id", myGPlayer.getPlayer().getId());
+            gameViewDTO.put("created", myGPlayer.getGame().getcDate());
+            gameViewDTO.put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
+            gameViewDTO.put("ships", makeShipsDTO(myGPlayer));
+            gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
 
-        return gameViewDTO;
+            return gameViewDTO;
+//        }
+//        return new ResponseEntity<>(makeMap("Error", "You have to login"), HttpStatus.UNAUTHORIZED);
     }
 
     private List<Object> makeShipsDTO(GamePlayer myGPlayer) {
@@ -193,6 +196,21 @@ public class SalvoController {
         map.put("status", key);
         map.put("message", value);
         return map;
+    }
+
+    public Player loggedUser(Authentication authentication) {
+        if (userLogged(authentication)) {
+            return playerRepo.findByUserName(authentication.getName());
+        }
+        return null;
+    }
+
+    public Boolean userLogged (Authentication authentication) {
+        if (authentication == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

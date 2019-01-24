@@ -1,3 +1,4 @@
+
 function getData() {
     fetch('http://localhost:8080/api/games', {
 
@@ -28,7 +29,7 @@ function getLeaderData() {
 
 getLeaderData()
 getData()
-login()
+//login()
 //logout()
 
 function main (slvGames){
@@ -97,27 +98,86 @@ function makeList(slvGames){
         })
 }
 
-function login() {
-                let email = document.getElementById("exampleInputEmail1").value.toLowerCase();
-                let password = document.getElementById("exampleInputPassword1").value;
-                console.log(email)
-                console.log(password)
-
-//               $.post("/api/login", {
-//                       userName: email,
-//                        password: password
-//                  })
-//                   .then(response => {
-//                         console.log("logged in"),
-//                        console.log(JSON.stringify(response)),
-//                            location.reload();
-//                    })
-//                    .catch(error => console.error('Error:', error))
-            }
-
  function logout() {
-//                $.post("/api/logout").done(function () {
-//                    console.log("logged out");
-//                });
-//                location.reload();
-            }
+                $.post("/api/logout").done(function () {
+                    console.log("logged out");
+                });
+                location.reload();
+}
+
+
+
+function signIn() {
+      let name = document.getElementById("create-user").value.toLowerCase();
+      let userName = document.getElementById("create-username").value.toLowerCase();
+      let userPassword = document.getElementById("create-password").value;
+
+             let info ={
+                  fullName: name,
+                  userName: userName,
+                  userPassword: userPassword,
+                }
+                        console.log(info)
+                   fetch('http://localhost:8080/api/players', {
+                    credentials: "include",
+                    method: "POST",
+                    headers: {
+                                       "Content-Type": "application/x-www-form-urlencoded",
+                                       'Accept': 'application/json',
+                                     },
+                    body: `fullName=${info.fullName}&userName=${info.userName}&userPassword=${info.userPassword}`
+
+                })
+                .then(function(response){
+                   return response.json();
+                })
+                .then(function(data){
+                    console.log(data)
+                    if(data.status == "Success"){
+                        var form2  = document.getElementById("signIn")
+                        form2.style.display = 'none';
+                        var btnJoin  = document.getElementById("btn3")
+                        btnJoin.style.visibility = 'visible';
+                    }
+                });
+
+}
+
+function login() {
+      let userName = document.getElementById("username").value.toLowerCase();
+      let userPassword = document.getElementById("password").value;
+
+             let info ={
+                  userName: userName,
+                  userPassword: userPassword,
+                }
+                   fetch('http://localhost:8080/api/login', {
+                    credentials: "include",
+                    method: "POST",
+                    headers: {
+                              "Content-Type": "application/x-www-form-urlencoded",
+                              'Accept': 'application/json',
+                              "Access-Control-Allow-Origin" : "*",
+                              "Access-Control-Allow-Credentials" : true
+                              },
+                    body: `userName=${info.userName}&userPassword=${info.userPassword}`
+
+                })
+                .then(function(data){
+                    console.log(data)
+                    if(data.status == 200){
+                    var form  = document.getElementById("login")
+                    var btnJoin  = document.getElementById("btn3")
+                     form.style.display = 'none';
+                     btnJoin.style.visibility = 'visible';
+                    } else{
+                    alert("User not registered. Please sign In")
+                            var form2  = document.getElementById("signIn")
+                            var form  = document.getElementById("login")
+                            form.style.display = 'none';
+                            form2.style.visibility = 'visible';
+                    }
+                });
+
+}
+
