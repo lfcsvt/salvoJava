@@ -96,7 +96,7 @@ public class SalvoController {
     @RequestMapping("/game_view/{gPlayer_Id}")
     public Map<String, Object> getGameView(@PathVariable Long gPlayer_Id, Authentication authentication) {
         GamePlayer myGPlayer = gamePlayerRepo.findOne(gPlayer_Id);
-//        if(myGPlayer.getPlayer() == loggedUser(authentication)) {
+//        if(userLogged(authentication)) {
             Map<String, Object> gameViewDTO = new LinkedHashMap<String, Object>();
             gameViewDTO.put("Game_id", myGPlayer.getGame().getId());
             gameViewDTO.put("gPlayer_id", myGPlayer.getPlayer().getId());
@@ -106,8 +106,10 @@ public class SalvoController {
             gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
 
             return gameViewDTO;
-//        }
-//        return new ResponseEntity<>(makeMap("Error", "You have to login"), HttpStatus.UNAUTHORIZED);
+ //       }
+            //return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
+
+
     }
 
     private List<Object> makeShipsDTO(GamePlayer myGPlayer) {
@@ -244,9 +246,17 @@ public class SalvoController {
 
         Object firstElement = gameJoin.getGamePlayers().stream().findFirst().get().getPlayer();
         Player loggedUser = playerRepo.findByUserName(authentication.getName());
+
         if(firstElement == loggedUser){
             return new ResponseEntity<>(addMap("error", "Already in game."), HttpStatus.FORBIDDEN);
-        } else {
+        }
+
+//        if(gameJoin.getGamePlayers().size() == 2 && firstElement == loggedUser){
+//
+//            return new ResponseEntity<>(addMap("error", "Game has already two players."), HttpStatus.FORBIDDEN);
+//        }
+
+        else {
             GamePlayer newGamePlayer = new GamePlayer(loggedUser, gameJoin);
             gamePlayerRepo.save(newGamePlayer);
 

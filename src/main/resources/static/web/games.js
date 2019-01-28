@@ -210,7 +210,7 @@ function playerInfo(){
                               loggedUser_id = pData.loggedIn.id
                               newGames.forEach(game => {
                                 game.gamePlayers.forEach(gp =>{
-                                    if(gp.player.id == loggedUser_id || game.gamePlayers.length == 1){
+                                    if(gp.player.id != loggedUser_id && game.gamePlayers.length == 1){
                                         let btn = document.createElement("BUTTON")
                                         let myLi = document.getElementById("li" + game.id)
                                         btn.setAttribute("class", "btn-join")
@@ -218,6 +218,15 @@ function playerInfo(){
                                         btn.innerHTML = "Join Game"
                                         myLi.appendChild(btn)
                                         list.appendChild(myLi)
+                                    } else if(gp.player.id == loggedUser_id && game.gamePlayers.length == 2){
+                                    loggedUser_id = gp.player.id
+                                            let btn = document.createElement("BUTTON")
+                                            let myLi = document.getElementById("li" + game.id)
+                                            btn.setAttribute("class", "btn-join")
+                                            btn.setAttribute("onClick", "resumeGame()")
+                                            btn.innerHTML = "Resume Game"
+                                            myLi.appendChild(btn)
+                                            list.appendChild(myLi)
 
                                     }
                                 })
@@ -284,9 +293,17 @@ function joinGame(){
              })
              .then(function(json){
              console.log(json)
+
              })
               .catch(err => console.log(err));
    });
+   window.location =  "game.html?gp=" + loggedUser_id
+}
+
+
+ function resumeGame(){
+   window.location =  "game.html?gp=" + loggedUser_id
+
 }
 
 
