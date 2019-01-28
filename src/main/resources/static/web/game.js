@@ -26,7 +26,7 @@ function main(slvGames, leaderboard){
    placeSalvoes(slvGames)
    placeSHits(slvGames)
    myOpponentHits(slvGames)
-   createLBoard(leaderboard)
+//   createLBoard(leaderboard)
 //   enemyShips(slvGames)
 
 }

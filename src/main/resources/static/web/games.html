@@ -1,72 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"-->
-          <!--integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"-->
-          <!--crossorigin="anonymous">-->
     <link rel="stylesheet" href="games.css">
     <meta charset="UTF-8">
     <title>Salvo</title>
 </head>
 <body>
 
-<form method="post" action="index.html" id="login">
-    <div class="box">
-        <h1>Join the fight!!!</h1>
-        <label>Email:</label>
-        <input class="email" id="username"/>
-        <label>Password:</label>
-        <input class="email" id="password"/>
+<div class="canvas">
+    <div class="forms">
 
-        <a href="#"><div class="btn" onclick="login()">Sign In</div></a> <!-- End Btn -->
+        <form method="post" action="index.html" id="login">
+            <div class="box">
+                <h1>Join the fight!!!</h1>
+                <label>Email:</label>
+                <input class="email" id="username"/>
+                <label>Password:</label>
+                <input class="email" id="password"/>
 
-
-
-
-    </div> <!-- End Box -->
-
-</form>
-
-<form method="post" action="index.html" id="signIn">
-    <div class="box">
-        <h1>Join the fight!!!</h1>
-        <label>Name:</label>
-        <input class="email" id="create-user"/>
-        <label>Email:</label>
-        <input class="email" id="create-username"/>
-        <label>Password:</label>
-        <input class="email" id="create-password"/>
-
-        <!--<a href="#"><div class="btn2" onclick="signIn()">Sign Up</div></a> &lt;!&ndash; End Btn &ndash;&gt;-->
-        <a href="#"><div id="btn2" onclick="signIn()">Sign Up</div></a> <!-- End Btn2 -->
+                <a href="#"><div class="btn" onclick="login()">Sign In</div></a> <!-- End Btn -->
 
 
-    </div> <!-- End Box -->
 
-</form>
-<div class="container">
-    <ol id="gameList" class="list-group">
 
-    </ol>
+            </div> <!-- End Box -->
+
+        </form>
+
+        <form method="post" action="index.html" id="signIn">
+            <div class="box">
+                <h1>Join the fight!!!</h1>
+                <label>Name:</label>
+                <input class="email" id="create-user"/>
+                <label>Email:</label>
+                <input class="email" id="create-username"/>
+                <label>Password:</label>
+                <input class="email" id="create-password"/>
+
+                <!--<a href="#"><div class="btn2" onclick="signIn()">Sign Up</div></a> &lt;!&ndash; End Btn &ndash;&gt;-->
+                <a href="#"><div id="btn2" onclick="signIn()">Sign Up</div></a> <!-- End Btn2 -->
+
+
+            </div> <!-- End Box -->
+
+        </form>
+
+    </div>
+
+    <div class="container">
+        <ol id="gameList" class="list-group">
+
+        </ol>
+    </div>
+
+
+    <div class="container">
+        <table class="table">
+            <thead>
+            <td>Player</td>
+            <td>Total</td>
+            <td>Won</td>
+            <td>Lost</td>
+            <td>Tied</td>
+            </thead>
+            <tbody id="leader-table">
+
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 
 <div class="container">
-    <table class="table">
-        <thead>
-        <td>Player</td>
-        <td>Total</td>
-        <td>Won</td>
-        <td>Lost</td>
-        <td>Tied</td>
-        </thead>
-        <tbody id="leader-table">
-
-        </tbody>
-    </table>
-</div>
-<div class="container">
-    <a href="#"><div id="btn3" onclick="">Join Game</div></a> <!-- End Btn2 -->
+    <a href="#"><div id="btn3" onclick="addNewGame()">New Game</div></a> <!-- End Btn2 -->
 </div>
 
     <script src="games.js"></script>
@@ -76,18 +83,5 @@
         crossorigin="anonymous">
 
 </script>
-
-
-
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"-->
-        <!--integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"-->
-        <!--crossorigin="anonymous">-->
-
-<!--</script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"-->
-        <!--integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"-->
-        <!--crossorigin="anonymous">-->
-
-<!--</script>-->
 </body>
 </html>

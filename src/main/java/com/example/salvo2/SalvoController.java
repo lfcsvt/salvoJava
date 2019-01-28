@@ -1,9 +1,5 @@
 package com.example.salvo2;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -198,7 +194,7 @@ public class SalvoController {
         return map;
     }
 
-    public Player loggedUser(Authentication authentication) {
+    public Player currentUser(Authentication authentication) {
         if (userLogged(authentication)) {
             return playerRepo.findByUserName(authentication.getName());
         }
@@ -213,4 +209,49 @@ public class SalvoController {
         }
     }
 
+    @RequestMapping(path = "/games", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> addNewGame(Authentication authentication){
+
+        if(!userLogged(authentication)){
+            return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
+        } else{
+
+            Game game = new Game();
+            gameRepo.save(game);
+            GamePlayer gamePlayer = new GamePlayer(currentUser (authentication), game);
+            gamePlayerRepo.save(gamePlayer);
+            return new ResponseEntity<>(addMap("gPlayer_id", gamePlayer.getId()),HttpStatus.CREATED);
+        }
+    }
+
+    private Map<String, Object> addMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, value);
+        return map;
+    }
+
+    @RequestMapping(path = "/game/{gameID}/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> addGamePlayer(@PathVariable long gameID, Authentication authentication){
+
+        if(!userLogged(authentication)){
+            return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
+        }
+        Game gameJoin = gameRepo.findOne(gameID);
+
+        if(gameJoin.getGamePlayers().size() == 2){
+            return new ResponseEntity<>(addMap("error", "Game has already two players."), HttpStatus.FORBIDDEN);
+        }
+
+        Object firstElement = gameJoin.getGamePlayers().stream().findFirst().get().getPlayer();
+        Player loggedUser = playerRepo.findByUserName(authentication.getName());
+        if(firstElement == loggedUser){
+            return new ResponseEntity<>(addMap("error", "Already in game."), HttpStatus.FORBIDDEN);
+        } else {
+            GamePlayer newGamePlayer = new GamePlayer(loggedUser, gameJoin);
+            gamePlayerRepo.save(newGamePlayer);
+
+            return new ResponseEntity<>(makeMap("new_GamePlayerID", newGamePlayer.getId()), HttpStatus.CREATED);
+        }
+
+    }
 }

@@ -1,4 +1,6 @@
-
+let loggedUser = false
+let loggedUser_id = ""
+let newGames = []
 function getData() {
     fetch('http://localhost:8080/api/games', {
 
@@ -29,12 +31,9 @@ function getLeaderData() {
 
 getLeaderData()
 getData()
-//login()
-//logout()
 
 function main (slvGames){
-makeList(slvGames)
-
+    makeList(slvGames)
 
 }
 
@@ -82,30 +81,22 @@ function makeList(slvGames){
      var user1 = ""
      var user2 = ""
         slvGames.forEach( game =>{
-        arr.push(game.gamePlayers)
-             user1 = game.gamePlayers[0].player.user
-             if(game.gamePlayers[1] == null || game.gamePlayers[1].player.user == undefined){
-                user2 = ""
-             } else {
-                user2 = game.gamePlayers[1].player.user
-             }
+                arr.push(game.gamePlayers)
+                     user1 = game.gamePlayers[0].player.name
+                     if(game.gamePlayers[1] == null || game.gamePlayers[1].player.user == undefined){
+                          user2 = ""
+                     } else {
+                        user2 = game.gamePlayers[1].player.name
+                     }
+                        myLi = document.createElement("li")
+                        myLi.setAttribute("id","li" + game.id)
+                        myLi.innerHTML = ("Game Started at:  "
+                                          + game.created + "  || Players:  " + user1 + " X " + user2 + " || game #: "+ game.id)
+                        myLi.setAttribute("class", "list-group-item")
+                        list.appendChild(myLi);
+                })
 
-                myLi = document.createElement("li")
-                myLi.innerHTML = ("Game Id  " + game.id + "  game creation  "
-                                  + game.created + "  game users  " + user1 + " , " + user2 )
-                myLi.setAttribute("class", "list-group-item")
-                list.appendChild(myLi);
-        })
 }
-
- function logout() {
-                $.post("/api/logout").done(function () {
-                    console.log("logged out");
-                });
-                location.reload();
-}
-
-
 
 function signIn() {
       let name = document.getElementById("create-user").value.toLowerCase();
@@ -134,6 +125,23 @@ function signIn() {
                 .then(function(data){
                     console.log(data)
                     if(data.status == "Success"){
+                    loggedUser == true
+                    fetch('http://localhost:8080/api/login', {
+                                        credentials: "include",
+                                        method: "POST",
+                                        headers: {
+                                                  "Content-Type": "application/x-www-form-urlencoded",
+                                                  'Accept': 'application/json',
+                                                  "Access-Control-Allow-Origin" : "*",
+                                                  "Access-Control-Allow-Credentials" : true
+                                                  },
+                                        body: `userName=${info.userName}&userPassword=${info.userPassword}`
+
+                                    })
+                                    .then(function(data){
+                                        console.log(data)
+                        });
+
                         var form2  = document.getElementById("signIn")
                         form2.style.display = 'none';
                         var btnJoin  = document.getElementById("btn3")
@@ -166,6 +174,8 @@ function login() {
                 .then(function(data){
                     console.log(data)
                     if(data.status == 200){
+                    loggedUser = true
+                    playerInfo()
                     var form  = document.getElementById("login")
                     var btnJoin  = document.getElementById("btn3")
                      form.style.display = 'none';
@@ -180,4 +190,103 @@ function login() {
                 });
 
 }
+
+ function logout() {
+                $.post("/api/logout").done(function () {
+                    console.log("logged out");
+                });
+                location.reload();
+}
+
+
+function playerInfo(){
+    var list = document.getElementById("gameList")
+        if(loggedUser == true){
+                  fetch('http://localhost:8080/api/games')
+                          .then(response => response.json())
+                          .then(response => {
+                              const pData = response
+                              newGames = pData.games
+                              loggedUser_id = pData.loggedIn.id
+                              newGames.forEach(game => {
+                                game.gamePlayers.forEach(gp =>{
+                                    if(gp.player.id == loggedUser_id || game.gamePlayers.length == 1){
+                                        let btn = document.createElement("BUTTON")
+                                        let myLi = document.getElementById("li" + game.id)
+                                        btn.setAttribute("class", "btn-join")
+                                        btn.setAttribute("onClick", "joinGame()")
+                                        btn.innerHTML = "Join Game"
+                                        myLi.appendChild(btn)
+                                        list.appendChild(myLi)
+
+                                    }
+                                })
+                              })
+
+                          })
+                          .catch(err => console.log(err));
+
+
+        }
+
+}
+
+function addNewGame(){
+    if(loggedUser == true){
+        fetch('http://localhost:8080/api/games', {
+        credentials: "include",
+        method: "POST",
+        headers: {
+             "Content-Type": "application/x-www-form-urlencoded",
+             'Accept': 'application/json'
+                  },
+         })
+         .then(function(response){
+         return response.json();
+         })
+         .then(function(data){
+         console.log(data)
+         window.location =  "game.html?gp=" + data.gPlayer_id
+         });
+    } else {
+        alert("You must be logged in to create a game")
+    }
+
+}
+
+function joinGame(){
+    let arr = []
+    let gameData = ""
+   $("li").click(function(){
+   id = $(this).attr("id")
+     var myvar = id;
+     myvar = myvar.split('');
+    myvar.forEach(el =>{
+//        console.log(el)
+        arr.push(el)
+
+    })
+    delete arr[0]
+    delete arr[1]
+    gameData = arr.join('')
+    console.log(gameData)
+
+    fetch('/api/game/' + gameData +"/players", {
+            credentials: "include",
+            method: "POST",
+            headers: {
+                 "Content-Type": "application/x-www-form-urlencoded",
+                 'Accept': 'application/json'
+                      },
+             })
+             .then(function(response){
+             return response.json();
+             })
+             .then(function(json){
+             console.log(json)
+             })
+              .catch(err => console.log(err));
+   });
+}
+
 
