@@ -40,7 +40,7 @@ function main (slvGames){
 function getGPId(slvGames){
 slvGames.forEach(game => {
 game.gamePlayers.forEach(gp =>{
-console.log(gp.gp_id)
+//console.log(gp.gp_id)
 
 })
 })
@@ -50,34 +50,33 @@ function main2 (leaders){
 createLBoard(leaders)
 
 }
-
 function createLBoard(leaders){
 
-var lTable = document.getElementById("leader-table")
-    leaders.forEach(player => {
-     var  count = {};
-     player.scores.forEach(function(i) { count[i] = (count[i]||0) + 1;});
-       let total = player.scores.reduce((a, b) => a + b, 0)
-        let row = document.createElement("tr")
-        let won = count[1]
-        let lost = count[0]
-        let tied = count[0.5]
-        row.insertCell().innerHTML = player.player_name
-        row.insertCell().innerHTML = total
-        if(won == undefined || lost == undefined || tied == undefined){
-            won = " ---"
-            lost = " ---"
-            tied = " ---"
-              row.insertCell().innerHTML = won
-              row.insertCell().innerHTML = lost
-              row.insertCell().innerHTML = tied
-        } else {
-             row.insertCell().innerHTML = won
-             row.insertCell().innerHTML = lost
-             row.insertCell().innerHTML = tied
-        }
-    lTable.appendChild(row)
-    })
+    var lTable = document.getElementById("leader-table")
+        leaders.forEach(player => {
+         var  count = {};
+         player.scores.forEach(function(i) { count[i] = (count[i]||0) + 1;});
+           let total = player.scores.reduce((a, b) => a + b, 0)
+            let row = document.createElement("tr")
+            let won = count[1]
+            let lost = count[0]
+            let tied = count[0.5]
+            row.insertCell().innerHTML = player.player_name
+            row.insertCell().innerHTML = total
+            if(won == undefined || lost == undefined || tied == undefined){
+                won = " ---"
+                lost = " ---"
+                tied = " ---"
+                  row.insertCell().innerHTML = won
+                  row.insertCell().innerHTML = lost
+                  row.insertCell().innerHTML = tied
+            } else {
+                 row.insertCell().innerHTML = won
+                 row.insertCell().innerHTML = lost
+                 row.insertCell().innerHTML = tied
+            }
+        lTable.appendChild(row)
+        })
 
 }
 
@@ -88,19 +87,28 @@ function makeList(slvGames){
     var myLi = document.createElement("li")
      var user1 = ""
      var user2 = ""
+     var user1_id = ""
+     var user2_id = ""
+
         slvGames.forEach( game =>{
+
                 arr.push(game.gamePlayers)
                      user1 = game.gamePlayers[0].player.name
+                     user1_id = game.gamePlayers[0].gp_id
+
                      if(game.gamePlayers[1] == null || game.gamePlayers[1].player.user == undefined){
                           user2 = ""
+                          user2_id= ""
                      } else {
                         user2 = game.gamePlayers[1].player.name
-                        console.log(game.gamePlayers)
+                        user2_id = game.gamePlayers[1].gp_id
                      }
                         myLi = document.createElement("li")
                         myLi.setAttribute("id","li" + game.id)
-                        myLi.innerHTML = ("Game Started at:  "
-                                          + game.created + "  || Players:  " + user1 + " X " + user2 + " || game #: "+ game.id)
+                        var time = new Date (game.created ).toGMTString()
+                        myLi.innerHTML = ("Game #: " + game.id + " || "+"Started:  "
+                                          + time + "  || Players:  " + user1 + " - " + user1_id
+                                          + " X " + user2  +  " - " + user2_id )
                         myLi.setAttribute("class", "list-group-item")
                         list.appendChild(myLi);
                 })
@@ -136,21 +144,21 @@ function signIn() {
                     location.reload();
                     if(data.status == "Success"){
                     loggedUser == true
-                    fetch('http://localhost:8080/api/login', {
-                                        credentials: "include",
-                                        method: "POST",
-                                        headers: {
-                                                  "Content-Type": "application/x-www-form-urlencoded",
-                                                  'Accept': 'application/json',
-                                                  "Access-Control-Allow-Origin" : "*",
-                                                  "Access-Control-Allow-Credentials" : true
-                                                  },
-                                        body: `userName=${info.userName}&userPassword=${info.userPassword}`
-
-                                    })
-                                    .then(function(data){
-                                        console.log(data)
-                        });
+//                    fetch('http://localhost:8080/api/login', {
+//                                        credentials: "include",
+//                                        method: "POST",
+//                                        headers: {
+//                                                  "Content-Type": "application/x-www-form-urlencoded",
+//                                                  'Accept': 'application/json',
+//                                                  "Access-Control-Allow-Origin" : "*",
+//                                                  "Access-Control-Allow-Credentials" : true
+//                                                  },
+//                                        body: `userName=${info.userName}&userPassword=${info.userPassword}`
+//
+//                                    })
+//                                    .then(function(data){
+//                                        console.log(data)
+//                        });
 
                         var form2  = document.getElementById("signIn")
                         form2.style.display = 'none';
@@ -224,6 +232,7 @@ function playerInfo(){
                                         let btn = document.createElement("BUTTON")
                                         let myLi = document.getElementById("li" + game.id)
                                         btn.setAttribute("class", "btn-join")
+                                        console.log(id)
                                         btn.setAttribute("onClick", "joinGame()")
                                         btn.innerHTML = "Join Game"
                                         myLi.appendChild(btn)
@@ -237,7 +246,6 @@ function playerInfo(){
                                             btn.innerHTML = "Resume Game"
                                             myLi.appendChild(btn)
                                             list.appendChild(myLi)
-
                                     }
                                 })
                               })
@@ -265,6 +273,7 @@ function addNewGame(){
          })
          .then(function(data){
          console.log(data)
+         console.log(data.gPlayer_id)
          window.location =  "game.html?gp=" + data.gPlayer_id
          });
     } else {
@@ -305,10 +314,13 @@ function joinGame(){
              })
               .catch(err => console.log(err));
    });
+
    window.location =  "game.html?gp=" + loggedUser_id
 }
 
  function resumeGame(){
+
+
    window.location =  "game.html?gp=" + loggedUser_id
 
 }

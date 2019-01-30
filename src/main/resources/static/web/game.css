@@ -26,3 +26,45 @@ p{
  margin-left: 5px;
 }
 
+ .draggable {
+     float:left;
+     height: 40px;
+     background-color: gray;
+ }
+
+  .draggable p {
+      text-align: center;
+      padding: -20px 0 0 0;
+      font-weight:900;
+  }
+  .draggable.ui-draggable-dragging {
+      background: red;
+  }
+
+.patrol-boat{
+width 100px;
+
+
+}
+
+.carrier{
+width 250px !important;
+margin-left: 10px;
+}
+
+.battleship{
+width 200px;
+margin-left: 10px;
+}
+
+.submarine{
+width 150px;
+margin-left: 10px;
+
+}
+
+.destroyer{
+width 150px;
+margin-left: 10px;
+}
+

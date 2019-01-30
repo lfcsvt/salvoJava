@@ -49,6 +49,8 @@ var row = document.createElement("tr");
         for(var j = 0 ; j< numArr.length; j++){
               var td = document.createElement("td");
               td.setAttribute("id",letArr[i] + numArr[j])
+              td.setAttribute("ondrop", "drop(event)")
+              td.setAttribute("ondragover", "allowDrop(event)")
             row.appendChild(td)
         }
 
@@ -209,7 +211,7 @@ function placeShip(){
 //              { type: "destroyer", locations: ["A1", "B1", "C1"] },
 //              { type: "submarine", locations: ["F2", "F3", "F4"] },
 //              { type: "patrol boat", locations: ["H5", "H6"] }
-              { "type": "carrier", "locations": ["I2", "I3", "I4","I5","I6"] },
+              { "type": "carrier", "locations": ["A10", "B10", "C10","D10","E10"] },
               { "type": "battleship", "locations": ["D2", "D3", "D4", "D5"] },
               { "type": "destroyer", "locations" : ["A1", "B1", "C1"] },
               { "type": "submarine", "locations": ["F2", "F3", "F4"] },
@@ -249,14 +251,25 @@ function addShips(){
     var myParam = urlParams.get('gp');
     var arr = Array.from(Array(10).keys())
     var arr2 = Array.from(Array(10), (e, i) => String.fromCharCode(i + 65));
-        console.log(arr)
-        console.log(arr2)
             arr.forEach(el => {
-                console.log(el)
                     arr2.forEach(elem =>{
-                        console.log(elem)
                         data.push(elem + (el + 1))
-                                })
-})
-console.log(data.sort(a - b))
+                                        })
+                              })
+
+
+}
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
 }
