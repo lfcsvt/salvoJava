@@ -34,9 +34,17 @@ getData()
 
 function main (slvGames){
     makeList(slvGames)
+    getGPId(slvGames)
 
 }
+function getGPId(slvGames){
+slvGames.forEach(game => {
+game.gamePlayers.forEach(gp =>{
+console.log(gp.gp_id)
 
+})
+})
+}
 function main2 (leaders){
 
 createLBoard(leaders)
@@ -87,6 +95,7 @@ function makeList(slvGames){
                           user2 = ""
                      } else {
                         user2 = game.gamePlayers[1].player.name
+                        console.log(game.gamePlayers)
                      }
                         myLi = document.createElement("li")
                         myLi.setAttribute("id","li" + game.id)
@@ -124,6 +133,7 @@ function signIn() {
                 })
                 .then(function(data){
                     console.log(data)
+                    location.reload();
                     if(data.status == "Success"){
                     loggedUser == true
                     fetch('http://localhost:8080/api/login', {
@@ -271,14 +281,12 @@ function joinGame(){
      var myvar = id;
      myvar = myvar.split('');
     myvar.forEach(el =>{
-//        console.log(el)
         arr.push(el)
 
     })
     delete arr[0]
     delete arr[1]
     gameData = arr.join('')
-    console.log(gameData)
 
     fetch('/api/game/' + gameData +"/players", {
             credentials: "include",
@@ -286,7 +294,7 @@ function joinGame(){
             headers: {
                  "Content-Type": "application/x-www-form-urlencoded",
                  'Accept': 'application/json'
-                      },
+                      }
              })
              .then(function(response){
              return response.json();
@@ -299,7 +307,6 @@ function joinGame(){
    });
    window.location =  "game.html?gp=" + loggedUser_id
 }
-
 
  function resumeGame(){
    window.location =  "game.html?gp=" + loggedUser_id

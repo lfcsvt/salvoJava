@@ -1,6 +1,7 @@
 package com.example.salvo2;
 import java.util.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -99,7 +100,7 @@ public class SalvoController {
 //        if(userLogged(authentication)) {
             Map<String, Object> gameViewDTO = new LinkedHashMap<String, Object>();
             gameViewDTO.put("Game_id", myGPlayer.getGame().getId());
-            gameViewDTO.put("gPlayer_id", myGPlayer.getPlayer().getId());
+            gameViewDTO.put("player_id", myGPlayer.getPlayer().getId());
             gameViewDTO.put("created", myGPlayer.getGame().getcDate());
             gameViewDTO.put("gamePlayer", getGamePlayer(myGPlayer.getGame()));
             gameViewDTO.put("ships", makeShipsDTO(myGPlayer));
@@ -263,5 +264,44 @@ public class SalvoController {
             return new ResponseEntity<>(makeMap("new_GamePlayerID", newGamePlayer.getId()), HttpStatus.CREATED);
         }
 
+    }
+
+    @RequestMapping(path="/games/players/{gPlayer_id}/ships", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> placeShips(
+            @PathVariable long gPlayer_id,
+            @RequestBody List<Ship> myShipsList,
+            Authentication authentication) {
+
+        List<Integer> shipSizes = new ArrayList<>();
+        List<String> shipLocations = new ArrayList<>();
+
+        System.out.println(myShipsList);
+
+        for (Ship ship : myShipsList) {
+            shipSizes.add(ship.getShipLocations().size());
+        }
+
+        if (!userLogged(authentication)) {
+            return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
+        }
+
+        else if (gamePlayerRepo.findById(gPlayer_id) == null) {
+            return new ResponseEntity<>(makeMap("Error", "game doesn't exist"), HttpStatus.UNAUTHORIZED);
+        }
+
+        else if (gamePlayerRepo.findById(gPlayer_id).iterator().next().getPlayer() != currentUser(authentication)) {
+            return new ResponseEntity<>(makeMap("Error", "you cannot move other player's ships"), HttpStatus.UNAUTHORIZED);
+        }
+
+        else {
+            GamePlayer gamePlayer = gamePlayerRepo.findOne(gPlayer_id);
+            for (Ship newShip : myShipsList) {
+                gamePlayer.makeShip(newShip);
+                shipRepo.save(newShip);
+            }
+            return new ResponseEntity<>(makeMap("Success", "the ship was placed"),HttpStatus.CREATED);
+
+
+        }
     }
 }
