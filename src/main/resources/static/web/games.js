@@ -232,7 +232,6 @@ function playerInfo(){
                                         let btn = document.createElement("BUTTON")
                                         let myLi = document.getElementById("li" + game.id)
                                         btn.setAttribute("class", "btn-join")
-                                        console.log(id)
                                         btn.setAttribute("onClick", "joinGame()")
                                         btn.innerHTML = "Join Game"
                                         myLi.appendChild(btn)
@@ -319,6 +318,7 @@ function joinGame(){
 }
 
  function resumeGame(){
+    var id = document.getElementById
 
 
    window.location =  "game.html?gp=" + loggedUser_id

@@ -273,7 +273,6 @@ public class SalvoController {
             Authentication authentication) {
 
         List<Integer> shipSizes = new ArrayList<>();
-        List<String> shipLocations = new ArrayList<>();
 
         System.out.println(myShipsList);
 
@@ -285,14 +284,17 @@ public class SalvoController {
             return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
         }
 
-        else if (gamePlayerRepo.findById(gPlayer_id) == null) {
+        if (gamePlayerRepo.findById(gPlayer_id) == null) {
             return new ResponseEntity<>(makeMap("Error", "game doesn't exist"), HttpStatus.UNAUTHORIZED);
         }
 
-        else if (gamePlayerRepo.findById(gPlayer_id).iterator().next().getPlayer() != currentUser(authentication)) {
+        if (gamePlayerRepo.findById(gPlayer_id).iterator().next().getPlayer() != currentUser(authentication)) {
             return new ResponseEntity<>(makeMap("Error", "you cannot move other player's ships"), HttpStatus.UNAUTHORIZED);
         }
 
+        if (gamePlayerRepo.findById(gPlayer_id).iterator().next().getAllShips().size() > 0) {
+            return new ResponseEntity<>(makeMap("Error", "you cannot add more ships"), HttpStatus.UNAUTHORIZED);
+        }
         else {
             GamePlayer gamePlayer = gamePlayerRepo.findOne(gPlayer_id);
             for (Ship newShip : myShipsList) {
