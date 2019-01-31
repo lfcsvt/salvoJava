@@ -1,6 +1,6 @@
 table{
 
-  width: 500px;
+  width: 510px;
   height 500px;
   margin-bottom: 50px;
   margin-left: 50px;
@@ -8,10 +8,18 @@ table{
 
 }
 
-td, th {
+table tr, th {
     border: 1px solid black;
     width: 30px !important;
-    height 30px !important;
+    overflow:hidden;
+
+}
+
+table td, th {
+    border: 1px solid black;
+    width: 8%;
+    height: 10%;
+    overflow:hidden;
 
 }
 
@@ -42,29 +50,49 @@ p{
   }
 
 .patrol-boat{
-width 100px;
+    width: 91px;
+    height: 21px;
+    text-align: center;
+    border-radius: 25px;
 
 
 }
 
 .carrier{
-width 250px !important;
-margin-left: 10px;
+    width: 223px;
+    height: 21px;
+    margin-left: 10px;
+    text-align: center;
+    border-radius: 25px;
 }
 
 .battleship{
-width 200px;
-margin-left: 10px;
+    width: 179px;
+    height: 21px;
+    margin-left: 10px;
+    text-align: center;
+    border-radius: 25px;
 }
 
 .submarine{
-width 150px;
-margin-left: 10px;
+    width: 135px;
+    height: 21px;
+    margin-left: 10px;
+    text-align: center;
+    border-radius: 25px;
 
 }
 
 .destroyer{
-width 150px;
-margin-left: 10px;
+    width: 135px;
+    height: 21px;
+    margin-left: 10px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.navy-yard{
+    margin-bottom: 15px;
+    height: 25px;
 }
 

@@ -247,6 +247,11 @@ function placeShip(){
 
 function addShips(){
     var  data = [ ]
+    var carrier = []
+    var patrolBoat = []
+    var destroyer = []
+    var submarine = []
+    var battleship = []
     var urlParams = new URLSearchParams(window.location.search);
     var myParam = urlParams.get('gp');
     var arr = Array.from(Array(10).keys())
@@ -257,7 +262,45 @@ function addShips(){
                                         })
                               })
 
+//    console.log(data)
+console.log(carrier.length)
 
+    for(var i = 0; i < data.length; i++){
+        while(carrier.length < 5 ){
+            carrier = data.slice(0, 5).concat(carrier);
+            data = data.slice(5, -1)
+            for (var j = 0; j < data.length; j++){
+              while(battleship.length < 4){
+               battleship = data.slice(89, -1).concat(battleship);
+               data = data.slice(0, 89);
+                 for (var x = 0; x < data.length; x++){
+                      while(submarine.length < 3){
+                         submarine = data.slice(7, 10).concat(submarine);
+                            data = data.slice(0, 89);
+                        }
+                 }
+
+
+
+
+               }
+            }
+
+//            while(destroyer.length < 3){
+//                destroyer.push(data[i ++])
+//            }
+
+
+        }
+
+    }
+
+
+console.log(carrier)
+console.log(patrolBoat)
+console.log(submarine)
+console.log(destroyer)
+console.log(battleship)
 }
 
 function allowDrop(ev) {
@@ -265,6 +308,7 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
+
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
@@ -272,4 +316,8 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   ev.target.appendChild(document.getElementById(data));
+  console.log(ev.target)
 }
+
+
+
