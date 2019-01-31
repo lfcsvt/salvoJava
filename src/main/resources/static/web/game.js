@@ -261,46 +261,84 @@ function addShips(){
                         data.push(elem + (el + 1))
                                         })
                               })
-
-//    console.log(data)
-console.log(carrier.length)
-
     for(var i = 0; i < data.length; i++){
         while(carrier.length < 5 ){
             carrier = data.slice(0, 5).concat(carrier);
             data = data.slice(5, -1)
-            for (var j = 0; j < data.length; j++){
-              while(battleship.length < 4){
-               battleship = data.slice(89, -1).concat(battleship);
-               data = data.slice(0, 89);
-                 for (var x = 0; x < data.length; x++){
-                      while(submarine.length < 3){
-                         submarine = data.slice(7, 10).concat(submarine);
+                for (var j = 0; j < data.length; j++){
+                    while(battleship.length < 4){
+                        battleship = data.slice(89, -1).concat(battleship);
                             data = data.slice(0, 89);
+                            console.log(data.length)
+                                for (var x = 0; x < data.length; x++){
+                                    while(submarine.length < 3){
+                                        submarine = data.slice(7, 10).concat(submarine);
+                                           data = data.filter( item => !submarine.includes(item))
+                                                for (var y = 0; y < data.length; y++ ){
+                                                    while(destroyer.length < 3){
+                                                    destroyer = data.slice(17,20).concat(destroyer);
+                                                    data = data.filter( item => !destroyer.includes(item))
+                                                    for (var z = 0; z < data.length; z++){
+                                                        while(patrolBoat.length < 2){
+                                                             patrolBoat= data.slice(77, 78).concat(patrolBoat);
+                                                             data = data.filter( item => !patrolBoat.includes(item))
+
+                                    }
+
+                                }
+                            }
                         }
+
+                    }
                  }
-
-
-
 
                }
             }
 
-//            while(destroyer.length < 3){
-//                destroyer.push(data[i ++])
-//            }
-
-
         }
 
     }
-
-
 console.log(carrier)
-console.log(patrolBoat)
+console.log(battleship)
 console.log(submarine)
 console.log(destroyer)
-console.log(battleship)
+console.log(patrolBoat)
+var urlParams = new URLSearchParams(window.location.search);
+    var myParam = urlParams.get('gp');
+
+    let ships = [
+              { type: "carrier", locations: carrier},
+              { type: "battleship",locations: battleship},
+              { type: "destroyer", locations: submarine },
+              { type: "submarine", locations: destroyer },
+              { type: "patrol boat", locations: patrolBoat }
+              ]
+
+                let  url = '/api/games/players/'+ myParam + '/ships'
+                  console.log(url);
+
+                  fetch(url, {
+                      method: "POST",
+                      credentials: "include",
+                      headers:{
+                          'Accept': "application/json",
+                          'Content-Type': "application/json"
+
+                      },
+
+                       body : JSON.stringify(ships)
+
+              //         body:`type=${data.type}&locations=${data.locations}`
+
+                       })
+                       .then(function(response){
+                          return response.json();
+                       })
+                       .then(function(json){
+                        
+                          location.reload();
+                       });
+
 }
 
 function allowDrop(ev) {
