@@ -295,9 +295,6 @@ function joinGame(){
     delete arr[0]
     delete arr[1]
     gameData = arr.join('')
-//      var id = document.getElementById("li" + gameData)
-//      console.log(gameData)
-//      console.log(id)
 
     fetch('/api/game/' + gameData +"/players", {
             credentials: "include",
@@ -323,10 +320,11 @@ function joinGame(){
 
  function resumeGame(){
 
-
-
    window.location =  "game.html?gp=" + loggedUser_id
 
 }
+
+
+
 
 

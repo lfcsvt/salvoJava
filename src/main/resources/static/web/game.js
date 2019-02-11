@@ -1,10 +1,12 @@
 makeGrid()
-makeSGrid()
-getData()
+//makeSGrid()
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var myParam = urlParams.get('gp');
+  getData()
+  let turn;
 
  function getData() {
- var urlParams = new URLSearchParams(window.location.search);
- var myParam = urlParams.get('gp');
  var url1 = 'http://localhost:8080/api/game_view/' + myParam ;
  console.log(myParam)
         var urls = [url1, "http://localhost:8080/api/leaderboard"]
@@ -13,32 +15,36 @@ getData()
           });
           return fetch(request).then(response => response.json());
         });
-
         Promise.all(responseArray).then(allResults => {
           console.log(allResults[0])
-          let slvGames  = allResults[0]
-//          let leaderboard  = allResults[1]
-                          main (slvGames)
+            let slvGames  = allResults[0]
+                main (slvGames)
         })
       }
+
 function main(slvGames){
+   turn = getTurn(slvGames)
+   makeSGrid(slvGames)
    addPlayerInfo(slvGames)
    placeShips(slvGames)
    placeSalvoes(slvGames)
    placeSHits(slvGames)
    myOpponentHits(slvGames)
+   getTurn(slvGames)
+   checkSalvo()
+
 }
+
+
 
 function makeGrid(){
 var tblBody = document.getElementById("grid-tBody")
 var tbl = document.getElementById("grid-table");
 var letArr = ["A", "B" ,"C" ,"D" ,"E","F", "G", "H", "I", "J" ]
 var numArr = [1, 2 ,3 ,4 , 5, 6, 7, 8, 9, 10 ]
-// create the row for out table
 var row = document.createElement("tr");
     tblBody.innerHTML = ""
     for (var i = 0; i < letArr.length; i++) {
-//        row.setAttribute("id",letArr[i])
         var letter = letArr[i]
         var blank = " "
         var row = document.createElement("tr");
@@ -51,7 +57,7 @@ var row = document.createElement("tr");
               td.setAttribute("id",letArr[i] + numArr[j])
               td.setAttribute("ondrop", "drop(event)")
               td.setAttribute("ondragover", "allowDrop(event)")
-            row.appendChild(td)
+              row.appendChild(td)
         }
 
         tblBody.appendChild(row);
@@ -59,8 +65,21 @@ var row = document.createElement("tr");
     }
     tbl.appendChild(tblBody);
 }
+function getTurn(slvGames){
+console.log(slvGames)
+let n;
+    slvGames.salvoes.forEach(el => {
+        if(el.gp_id == myParam){
+            el.gp_salvoes.length
+                console.log(el.gp_salvoes.length + 1)
+                n = el.gp_salvoes.length + 1
 
-function makeSGrid(){
+        }
+    })
+    return n
+}
+function makeSGrid(slvGames){
+console.log(slvGames);
 var tblBody = document.getElementById("salvo-tBody")
 var tbl = document.getElementById("salvo-table");
 var letArr = ["A", "B" ,"C" ,"D" ,"E","F", "G", "H", "I", "J" ]
@@ -76,12 +95,28 @@ var row = document.createElement("tr");
         for(var j = 0 ; j< numArr.length; j++){
               var td = document.createElement("td");
               td.setAttribute("id","S" + letArr[i] + numArr[j])
+               td.setAttribute("onClick", "getSalvo(this.id)")
+
             row.appendChild(td)
         }
         tblBody.appendChild(row);
     }
     tbl.appendChild(tblBody);
 }
+
+//function checkSalvo(){
+//
+//    let hitDiv = document.querySelectorAll('.hit-div')
+//        console.log(hitDiv)
+//        console.log(Array.from(hitDiv).length)
+//        hitDiv.forEach(e => {
+//        let a = e.offsetParent
+//        return a.removeAttribute = "onclick"
+//        })
+//
+//
+//}
+
 
 function addPlayerInfo(slvGames){
     var myPlayer_id = slvGames.gPlayer_id
@@ -92,17 +127,17 @@ function addPlayerInfo(slvGames){
     var user = document.createElement("h3");
         arr.forEach(elem => {
             if(elem.player.id == myPlayer_id){
-            myPlayer_user = elem.player.user
-            user = document.createElement("h3");
-            var t = document.createTextNode("User: " + myPlayer_user + " X ")
-            var x = document.createTextNode("Opponent: " + myOpponent)
-            user.appendChild(t);
-            user.appendChild(x);
-            infoPlace.appendChild(user);
-            }   else if(elem.player.id !== myPlayer_id){
-                              myOpponent = elem.player.user
+                myPlayer_user = elem.player.user
+                user = document.createElement("h3");
+                var t = document.createTextNode("User: " + myPlayer_user + " X ")
+                var x = document.createTextNode("Opponent: " + myOpponent)
+                user.appendChild(t);
+                user.appendChild(x);
+                infoPlace.appendChild(user);
+            }else if(elem.player.id !== myPlayer_id){
+                    myOpponent = elem.player.user
 
-                              }
+                    }
         })
 }
 
@@ -120,14 +155,18 @@ function placeShips(slvGames){
 }
 
 function placeSalvoes(slvGames){
+ var urlParams = new URLSearchParams(window.location.search);
+ var myParam = urlParams.get('gp');
     let turn = document.createElement("p");
     let arr = slvGames.salvoes
     let user_id = slvGames.gPlayer_id
     arr.forEach(elem => {
-        if(elem.gp_id == user_id){
+        if(elem.gp_id == myParam){
+//        console.log(elem)  console.log(elem)
             elem.gp_salvoes.forEach(elem2 => {
                 elem2.salvoes_locations.forEach(place => {
-                    var slvSeg = document.getElementById("S" + place)
+                    var slvSeg = document.getElementById(place)
+//                    console.log(slvSeg)
                        if(slvSeg.id == "S" + place){
                              let hitDiv = document.createElement("div")
                              hitDiv.setAttribute("class", "hit-div")
@@ -146,17 +185,23 @@ function placeSalvoes(slvGames){
 
 
 function placeSHits(slvGames){
+ var urlParams = new URLSearchParams(window.location.search);
+ var myParam = urlParams.get('gp');
     let turn = document.createElement("p");
     let arr = slvGames.salvoes
-    let user_id = slvGames.gPlayer_id
+    let user_id = slvGames.player_id
     arr.forEach(elem => {
-        if(elem.gp_id !== user_id){
+    slvGames.gamePlayer.forEach(playa =>{
+//        console.log(playa.player.id)
+    })
+        if(elem.gp_id !== myParam){
+//        console.log(elem)
             elem.gp_salvoes.forEach(elem2 => {
                 elem2.salvoes_locations.forEach(place => {
                     var slvSeg = document.getElementById( place)
                        if(slvSeg.id ==  place){
-                            let hitDiv = document.createElement("div")
-                            hitDiv.setAttribute("class", "hit-div")
+                           let hitDiv = document.createElement("div")
+                           hitDiv.setAttribute("class", "hit-div")
                            let x = elem2.turn;
                            let text = document.createElement("p")
                            var t = document.createTextNode(x);
@@ -200,23 +245,18 @@ function myOpponentHits(slvGames){
         }
     })
 }
-//placeShip()
+
 function placeShip(){
     var urlParams = new URLSearchParams(window.location.search);
     var myParam = urlParams.get('gp');
 
     let data = [
-//              { type: "carrier", locations: ["I2", "I3", "I4","I5","I6"] },
-//              { type: "battleship",locations: ["D2", "D3", "D4", "D5"] },
-//              { type: "destroyer", locations: ["A1", "B1", "C1"] },
-//              { type: "submarine", locations: ["F2", "F3", "F4"] },
-//              { type: "patrol boat", locations: ["H5", "H6"] }
               { "type": "carrier", "locations": ["A10", "B10", "C10","D10","E10"] },
               { "type": "battleship", "locations": ["D2", "D3", "D4", "D5"] },
               { "type": "destroyer", "locations" : ["A1", "B1", "C1"] },
               { "type": "submarine", "locations": ["F2", "F3", "F4"] },
               { "type": "patrol boat", "locations": ["H5", "H6"] }
-            ]
+               ]
 
     let  url = '/api/games/players/'+ myParam + '/ships'
     console.log(url);
@@ -227,12 +267,9 @@ function placeShip(){
         headers:{
             'Accept': "application/json",
             'Content-Type': "application/json"
-
         },
 
          body : JSON.stringify(data)
-
-//         body:`type=${data.type}&locations=${data.locations}`
 
          })
          .then(function(response){
@@ -242,16 +279,19 @@ function placeShip(){
             console.log(data)
             location.reload();
          });
+}
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 function addShips(){
     var  data = [ ]
-    var carrier = []
-    var patrolBoat = []
-    var destroyer = []
-    var submarine = []
-    var battleship = []
+    var carrierArr = []
+    var patrolBoatArr = []
+    var destroyerArr = []
+    var submarineArr = []
+    var battleshipArr = []
     var urlParams = new URLSearchParams(window.location.search);
     var myParam = urlParams.get('gp');
     var arr = Array.from(Array(10).keys())
@@ -262,27 +302,30 @@ function addShips(){
                                         })
                               })
     for(var i = 0; i < data.length; i++){
-        while(carrier.length < 5 ){
-            carrier = data.slice(0, 5).concat(carrier);
+        while(carrierArr.length < 5 ){
+            carrierArr = data.slice(0, 5).concat(carrierArr);
             data = data.slice(5, -1)
+            console.log(carrierArr)
                 for (var j = 0; j < data.length; j++){
-                    while(battleship.length < 4){
-                        battleship = data.slice(89, -1).concat(battleship);
+                    while(battleshipArr.length < 4){
+                        battleshipArr = data.slice(89, -1).concat(battleshipArr);
                             data = data.slice(0, 89);
-                            console.log(data.length)
-                                for (var x = 0; x < data.length; x++){
-                                    while(submarine.length < 3){
-                                        submarine = data.slice(7, 10).concat(submarine);
-                                           data = data.filter( item => !submarine.includes(item))
-                                                for (var y = 0; y < data.length; y++ ){
-                                                    while(destroyer.length < 3){
-                                                    destroyer = data.slice(17,20).concat(destroyer);
-                                                    data = data.filter( item => !destroyer.includes(item))
-                                                    for (var z = 0; z < data.length; z++){
-                                                        while(patrolBoat.length < 2){
-                                                             patrolBoat= data.slice(77, 78).concat(patrolBoat);
-                                                             data = data.filter( item => !patrolBoat.includes(item))
-
+                            console.log(battleshipArr)
+                for (var x = 0; x < data.length; x++){
+                    while(submarineArr.length < 3){
+                         submarineArr = data.slice(7, 10).concat(submarineArr);
+                             data = data.filter( item => !submarineArr.includes(item))
+                             console.log(submarineArr)
+                for (var y = 0; y < data.length; y++ ){
+                     while(destroyerArr.length < 3){
+                         destroyerArr = data.slice(17,20).concat(destroyerArr);
+                            data = data.filter( item => !destroyerArr.includes(item))
+                            console.log(destroyerArr)
+                for (var z = 0; z < data.length; z++){
+                     while(patrolBoatArr.length < 2){
+                          patrolBoatArr = data.slice(77, 78).concat(patrolBoatArr);
+                             data = data.filter( item => !patrolBoatArr.includes(item))
+                                console.log(patrolBoatArr)
                                     }
 
                                 }
@@ -298,22 +341,27 @@ function addShips(){
         }
 
     }
-console.log(carrier)
-console.log(battleship)
-console.log(submarine)
-console.log(destroyer)
-console.log(patrolBoat)
+    for(var c = 0; c < 2; c++){
+    let n = getRandomInt(25) + 1
+    const every_nth = (data, nth) => data.filter((e, i) => i % nth === nth - 1);
+    let a = data.slice(0, n)
+     data = data.filter( item => !a.includes(item))
+
+    let c = every_nth(data, 10)
+    console.log(c);
+    }
+
+
 var urlParams = new URLSearchParams(window.location.search);
     var myParam = urlParams.get('gp');
 
     let ships = [
-              { type: "carrier", locations: carrier},
-              { type: "battleship",locations: battleship},
-              { type: "destroyer", locations: submarine },
-              { type: "submarine", locations: destroyer },
-              { type: "patrol boat", locations: patrolBoat }
+              { type: "carrier", locations: carrierArr},
+              { type: "battleship",locations: battleshipArr},
+              { type: "destroyer", locations: submarineArr },
+              { type: "submarine", locations: destroyerArr },
+              { type: "patrol boat", locations: patrolBoatArr }
               ]
-
                 let  url = '/api/games/players/'+ myParam + '/ships'
                   console.log(url);
 
@@ -323,39 +371,76 @@ var urlParams = new URLSearchParams(window.location.search);
                       headers:{
                           'Accept': "application/json",
                           'Content-Type': "application/json"
-
                       },
 
                        body : JSON.stringify(ships)
-
-              //         body:`type=${data.type}&locations=${data.locations}`
 
                        })
                        .then(function(response){
                           return response.json();
                        })
                        .then(function(json){
-                        
+
                           location.reload();
                        });
 
 }
 
-function allowDrop(ev) {
-  ev.preventDefault();
+//function allowDrop(ev) {
+//  ev.preventDefault();
+//}
+//
+//function drag(ev) {
+//
+//  ev.dataTransfer.setData("text", ev.target.id);
+//}
+//
+//function drop(ev) {
+//  ev.preventDefault();
+//  var data = ev.dataTransfer.getData("text");
+//  ev.target.appendChild(document.getElementById(data));
+//  console.log(ev.target)
+//}
+function getSalvo(id){
+    let isClicked = false
+    let allSalvoes = []
+    let td = document.getElementById(id)
+        allSalvoes.push(id)
+//    let newId = id.split('').slice(1, 4).join("")
+            if (allSalvoes.includes(id)){
+                 isClicked = true
+                 if(isClicked == true){
+                    let salvos = {turn: turn, locations:[id]}
+                        console.log(salvos)
+                        var urlParams = new URLSearchParams(window.location.search);
+                        var myParam = urlParams.get('gp');
+
+                            let  url = '/api/games/players/'+ myParam + '/salvos'
+                              fetch(url, {
+                                  method: "POST",
+                                  credentials: "include",
+                                  headers:{
+                                      'Accept': "application/json",
+                                      'Content-Type': "application/json"
+                                  },
+
+                                   body : JSON.stringify(salvos)
+
+                                   })
+                                   .then(function(response){
+
+                                      return response.json();
+                                   })
+                                   .then(function(json){
+                                       console.log(json)
+
+                                       location.reload();
+
+                                   })
+                                    .catch(err => console.log(err));
+        }
+    }
+
 }
-
-function drag(ev) {
-
-  ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-  console.log(ev.target)
-}
-
 
 

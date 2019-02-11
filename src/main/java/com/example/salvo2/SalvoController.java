@@ -1,7 +1,6 @@
 package com.example.salvo2;
 import java.util.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -107,11 +106,11 @@ public class SalvoController {
             gameViewDTO.put("salvoes", getSPlayer(myGPlayer.getGame()));
 
             return gameViewDTO;
- //       }
-            //return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
+        }
+//        return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
 
 
-    }
+//    }
 
     private List<Object> makeShipsDTO(GamePlayer myGPlayer) {
         List<Object> myGPShips = new ArrayList<>();
@@ -252,10 +251,10 @@ public class SalvoController {
             return new ResponseEntity<>(addMap("error", "Already in game."), HttpStatus.FORBIDDEN);
         }
 
-//        if(gameJoin.getGamePlayers().size() == 2 && firstElement == loggedUser){
-//
-//            return new ResponseEntity<>(addMap("error", "Game has already two players."), HttpStatus.FORBIDDEN);
-//        }
+        if(gameJoin.getGamePlayers().size() == 2 && firstElement == loggedUser){
+
+            return new ResponseEntity<>(addMap("error", "Game has already two players."), HttpStatus.FORBIDDEN);
+        }
 
         else {
             GamePlayer newGamePlayer = new GamePlayer(loggedUser, gameJoin);
@@ -273,8 +272,6 @@ public class SalvoController {
             Authentication authentication) {
 
         List<Integer> shipSizes = new ArrayList<>();
-
-        System.out.println(myShipsList);
 
         for (Ship ship : myShipsList) {
             shipSizes.add(ship.getShipLocations().size());
@@ -295,9 +292,12 @@ public class SalvoController {
         if (gamePlayerRepo.findById(gPlayer_id).iterator().next().getAllShips().size() > 0) {
             return new ResponseEntity<>(makeMap("Error", "you cannot add more ships"), HttpStatus.UNAUTHORIZED);
         }
+
+
         else {
             GamePlayer gamePlayer = gamePlayerRepo.findOne(gPlayer_id);
             for (Ship newShip : myShipsList) {
+                gamePlayer.makeShip(newShip);
                 gamePlayer.makeShip(newShip);
                 shipRepo.save(newShip);
             }
@@ -306,4 +306,38 @@ public class SalvoController {
 
         }
     }
+
+
+
+    @RequestMapping(path="/games/players/{gPlayer_id}/salvos", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>>placeSalvos(
+            @PathVariable long gPlayer_id,
+            @RequestBody Salvo mySalvo,
+            Authentication authentication){
+
+        GamePlayer gamePlayer = gamePlayerRepo.findOne(gPlayer_id);
+//        Integer currentTurn = gamePlayerRepo.findById(gPlayer_id).iterator().next().getAllSalvos().iterator().next().getTurn();
+
+        if (!userLogged(authentication)) {
+            return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
+        }
+
+        if (gamePlayerRepo.findById(gPlayer_id).iterator().next().getPlayer() != currentUser(authentication)) {
+            return new ResponseEntity<>(makeMap("Error", "Not the right player"), HttpStatus.UNAUTHORIZED);
+        }
+
+        if(mySalvo.getTurn() < gamePlayer.getAllSalvos().size() + 1){
+            return new ResponseEntity<>(makeMap("Error", "Wrong turn "), HttpStatus.UNAUTHORIZED);
+        }
+
+            gamePlayer.makeSalvo(mySalvo);
+            salvoRepo.save(mySalvo);
+
+
+        return new ResponseEntity<>(makeMap("Success", "salvo fired"),HttpStatus.CREATED);
+
+    }
+
+
+
 }
