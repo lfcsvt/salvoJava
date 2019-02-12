@@ -20,6 +20,7 @@ public class Ship {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private String shipType;
+    private boolean isSunk;
 
     @ElementCollection
     @Column(name="locations")
@@ -34,6 +35,7 @@ public class Ship {
     public Ship(String type) {
         this.shipType = type;
         this.id = getId();
+        this.isSunk = false;
     }
 
     public long getId() {
@@ -67,4 +69,8 @@ public class Ship {
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }
+
+    public void setSunk(boolean sunk) { isSunk = sunk; }
+
+    public boolean isSunk() { return isSunk; }
 }

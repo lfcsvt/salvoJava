@@ -142,7 +142,7 @@ public class Salvo2Application {
 			slv2.setLocations(new ArrayList<String>(Arrays.asList("SA7")));
 			gp1.makeSalvo(slv2);
 			Salvo slv3 = new Salvo(3);
-			slv3.setLocations(new ArrayList<String>(Arrays.asList("SH6")));
+			slv3.setLocations(new ArrayList<String>(Arrays.asList("SH2")));
 			gp1.makeSalvo(slv3);
 			Salvo slv4 = new Salvo(4);
 			slv4.setLocations(new ArrayList<String>(Arrays.asList("SD9")));
@@ -152,19 +152,19 @@ public class Salvo2Application {
 			gp1.makeSalvo(slv5);
 
 			Salvo slv6 = new Salvo(1);
-			slv6.setLocations(new ArrayList<String>(Arrays.asList("SB10")));
+			slv6.setLocations(new ArrayList<String>(Arrays.asList("SF6")));
 			gp2.makeSalvo(slv6);
 			Salvo slv7 = new Salvo(2);
-			slv7.setLocations(new ArrayList<String>(Arrays.asList("SC10")));
+			slv7.setLocations(new ArrayList<String>(Arrays.asList("SJ3")));
 			gp2.makeSalvo(slv7);
 			Salvo slv8 = new Salvo(3);
-			slv8.setLocations(new ArrayList<String>(Arrays.asList("SH3")));
+			slv8.setLocations(new ArrayList<String>(Arrays.asList("SH8")));
 			gp2.makeSalvo(slv8);
 			Salvo slv9 = new Salvo(4);
-			slv9.setLocations(new ArrayList<String>(Arrays.asList("SH2")));
+			slv9.setLocations(new ArrayList<String>(Arrays.asList("SH9")));
 			gp2.makeSalvo(slv9);
 			Salvo slv10 = new Salvo(5);
-			slv10.setLocations(new ArrayList<String>(Arrays.asList("SF6")));
+			slv10.setLocations(new ArrayList<String>(Arrays.asList("SB10")));
 			gp2.makeSalvo(slv10);
 
 			Salvo slv11 = new Salvo(1);

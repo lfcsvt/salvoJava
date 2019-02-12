@@ -107,7 +107,8 @@ var row = document.createElement("tr");
 //        console.log(Array.from(hitDiv).length)
 //        hitDiv.forEach(e => {
 //        let a = e.offsetParent
-//        return a.removeAttribute = "onclick"
+//        console.log(a)
+//        return a
 //        })
 //
 //
@@ -443,6 +444,22 @@ function getSalvo(id){
 
 }
 
-let hitSink = {
-    
+var hitSink = {
+    players:[
+    {name: "Jack Bauer", hit:[{turn:1, slvLoc:"F3", shipType:"Submarine"},{turn:3, slvLoc:"H2", shipType:"Patrol Boat"} ]},
+    {name:"Chloe O'Brian", hit:[{turn:2, slvLoc:"J3", shipType:"Patrol Boat"},{turn:5, slvLoc:"B10",shipType:"Carrier"}]}
+    ]
+
 }
+
+console.log(hitSink)
+
+function getHist(){
+    hitSink.players.forEach(el => {
+        el.hit.forEach(elem => {
+            console.log(elem)
+        })
+
+    })
+}
+getHist()
