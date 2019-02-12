@@ -316,8 +316,6 @@ public class SalvoController {
             Authentication authentication){
 
         GamePlayer gamePlayer = gamePlayerRepo.findOne(gPlayer_id);
-//        Integer currentTurn = gamePlayerRepo.findById(gPlayer_id).iterator().next().getAllSalvos().iterator().next().getTurn();
-
         if (!userLogged(authentication)) {
             return new ResponseEntity<>(makeMap("Error", "please login"), HttpStatus.UNAUTHORIZED);
         }

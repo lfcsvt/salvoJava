@@ -8,7 +8,6 @@ makeGrid()
 
  function getData() {
  var url1 = 'http://localhost:8080/api/game_view/' + myParam ;
- console.log(myParam)
         var urls = [url1, "http://localhost:8080/api/leaderboard"]
         let responseArray = urls.map((url) => {
           let request = new Request(url, {
@@ -31,7 +30,7 @@ function main(slvGames){
    placeSHits(slvGames)
    myOpponentHits(slvGames)
    getTurn(slvGames)
-   checkSalvo()
+//   checkSalvo()
 
 }
 
@@ -66,12 +65,10 @@ var row = document.createElement("tr");
     tbl.appendChild(tblBody);
 }
 function getTurn(slvGames){
-console.log(slvGames)
 let n;
     slvGames.salvoes.forEach(el => {
         if(el.gp_id == myParam){
             el.gp_salvoes.length
-                console.log(el.gp_salvoes.length + 1)
                 n = el.gp_salvoes.length + 1
 
         }
@@ -79,7 +76,6 @@ let n;
     return n
 }
 function makeSGrid(slvGames){
-console.log(slvGames);
 var tblBody = document.getElementById("salvo-tBody")
 var tbl = document.getElementById("salvo-table");
 var letArr = ["A", "B" ,"C" ,"D" ,"E","F", "G", "H", "I", "J" ]
@@ -162,12 +158,10 @@ function placeSalvoes(slvGames){
     let user_id = slvGames.gPlayer_id
     arr.forEach(elem => {
         if(elem.gp_id == myParam){
-//        console.log(elem)  console.log(elem)
             elem.gp_salvoes.forEach(elem2 => {
                 elem2.salvoes_locations.forEach(place => {
                     var slvSeg = document.getElementById(place)
-//                    console.log(slvSeg)
-                       if(slvSeg.id == "S" + place){
+                       if(slvSeg.id ==  place){
                              let hitDiv = document.createElement("div")
                              hitDiv.setAttribute("class", "hit-div")
                             let x = elem2.turn;
@@ -194,12 +188,12 @@ function placeSHits(slvGames){
     slvGames.gamePlayer.forEach(playa =>{
 //        console.log(playa.player.id)
     })
-        if(elem.gp_id !== myParam){
-//        console.log(elem)
+        if(elem.gp_id != myParam){
             elem.gp_salvoes.forEach(elem2 => {
                 elem2.salvoes_locations.forEach(place => {
-                    var slvSeg = document.getElementById( place)
-                       if(slvSeg.id ==  place){
+                    let newId = place.split('').slice(1, 4).join("")
+                    var slvSeg = document.getElementById( newId)
+                       if(slvSeg.id ==  newId){
                            let hitDiv = document.createElement("div")
                            hitDiv.setAttribute("class", "hit-div")
                            let x = elem2.turn;
@@ -225,21 +219,22 @@ function myOpponentHits(slvGames){
         elem.ships_locations.forEach(elem2 => {
             shipLocArr.push(elem2)
         })
-    })
-    arr.forEach(elem =>{
-        if(elem.gp_id !== user_id){
-            elem.gp_salvoes.forEach(elem2 =>{
-            elem2.salvoes_locations.forEach(elem3 => {
-                 let a = shipLocArr.filter(loc => loc == elem3)
-                 if(a.length > 0){
-                   a.forEach(hit => {
-                        let div_id = hit
-                        let divHit = document.getElementById(hit)
-                        divHit.firstChild.setAttribute("style", "background-color: red")
-                   })
-
-                 }
             })
+        arr.forEach(elem =>{
+            if(elem.gp_id != myParam){
+                elem.gp_salvoes.forEach(elem2 =>{
+                elem2.salvoes_locations.forEach(elem3 => {
+                    let elem4 = elem3.split('').slice(1, 4).join("")
+                    let a = shipLocArr.filter(loc => loc == elem4)
+                         if(a.length > 0){
+                           a.forEach(hit => {
+                                let div_id = hit
+                                let divHit = document.getElementById(hit)
+                                divHit.firstChild.setAttribute("style", "background-color: red")
+                        })
+
+                    }
+                })
 
             })
         }
@@ -341,7 +336,7 @@ function addShips(){
         }
 
     }
-    for(var c = 0; c < 2; c++){
+    for(var c = 0; c < 1; c++){
     let n = getRandomInt(25) + 1
     const every_nth = (data, nth) => data.filter((e, i) => i % nth === nth - 1);
     let a = data.slice(0, n)
@@ -349,40 +344,45 @@ function addShips(){
 
     let c = every_nth(data, 10)
     console.log(c);
+    while(c.length > 5){
+        c.shift()
+        c.pop()
+        console.log(c)
+    }
     }
 
 
 var urlParams = new URLSearchParams(window.location.search);
     var myParam = urlParams.get('gp');
 
-    let ships = [
-              { type: "carrier", locations: carrierArr},
-              { type: "battleship",locations: battleshipArr},
-              { type: "destroyer", locations: submarineArr },
-              { type: "submarine", locations: destroyerArr },
-              { type: "patrol boat", locations: patrolBoatArr }
-              ]
-                let  url = '/api/games/players/'+ myParam + '/ships'
-                  console.log(url);
-
-                  fetch(url, {
-                      method: "POST",
-                      credentials: "include",
-                      headers:{
-                          'Accept': "application/json",
-                          'Content-Type': "application/json"
-                      },
-
-                       body : JSON.stringify(ships)
-
-                       })
-                       .then(function(response){
-                          return response.json();
-                       })
-                       .then(function(json){
-
-                          location.reload();
-                       });
+//    let ships = [
+//              { type: "carrier", locations: carrierArr},
+//              { type: "battleship",locations: battleshipArr},
+//              { type: "destroyer", locations: submarineArr },
+//              { type: "submarine", locations: destroyerArr },
+//              { type: "patrol boat", locations: patrolBoatArr }
+//              ]
+//                let  url = '/api/games/players/'+ myParam + '/ships'
+//                  console.log(url);
+//
+//                  fetch(url, {
+//                      method: "POST",
+//                      credentials: "include",
+//                      headers:{
+//                          'Accept': "application/json",
+//                          'Content-Type': "application/json"
+//                      },
+//
+//                       body : JSON.stringify(ships)
+//
+//                       })
+//                       .then(function(response){
+//                          return response.json();
+//                       })
+//                       .then(function(json){
+//
+//                          location.reload();
+//                       });
 
 }
 
@@ -443,4 +443,6 @@ function getSalvo(id){
 
 }
 
-
+let hitSink = {
+    
+}
