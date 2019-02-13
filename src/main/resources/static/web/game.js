@@ -187,7 +187,6 @@ function placeSHits(slvGames){
     let user_id = slvGames.player_id
     arr.forEach(elem => {
     slvGames.gamePlayer.forEach(playa =>{
-//        console.log(playa.player.id)
     })
         if(elem.gp_id != myParam){
             elem.gp_salvoes.forEach(elem2 => {
@@ -457,7 +456,7 @@ console.log(hitSink)
 function getHist(){
     hitSink.players.forEach(el => {
         el.hit.forEach(elem => {
-            console.log(elem)
+//            console.log(elem)
         })
 
     })

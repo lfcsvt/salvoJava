@@ -99,5 +99,11 @@ public class GamePlayer {
 
     }
 
+    public Set<Ship> getOShis(GamePlayer gamePlayer){
+        if (this.getGame().getOpponent(gamePlayer) != null){
+            return this.getGame().getOpponent(gamePlayer).getAllShips();
+        }
+        return null;
+    }
 }
 

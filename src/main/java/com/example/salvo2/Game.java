@@ -22,7 +22,18 @@ public class Game {
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayers;
 
+    @OneToMany(mappedBy="game", fetch= FetchType.EAGER)
+    Set<Score> score;
 
+
+    public GamePlayer getOpponent(GamePlayer userGamePlayer) {
+        for (GamePlayer notUser: this.gamePlayers) {
+            if (userGamePlayer.getId() != notUser.getId()) {
+                return notUser;
+            }
+        }
+        return null;
+    }
 
     public Game () { }
 
