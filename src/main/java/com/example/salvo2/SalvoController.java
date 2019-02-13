@@ -93,6 +93,41 @@ public class SalvoController {
         return gPlayerDataObject;
     }
 
+    private Map<String, Object> getHitSinkInfo(GamePlayer gamePlayer) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("user",gamePlayer );
+        System.out.println(dto);
+
+        return dto;
+    }
+
+    private List<Object> getOShips(GamePlayer myGPlayer) {
+        List<Object> myOShips = new ArrayList<>();
+        List<Object> myOShipHits = new ArrayList<>();
+        myGPlayer.getGame().getOpponent(myGPlayer).getAllShips().forEach(elem -> {
+            elem.getShipLocations().forEach(elem2 ->{
+                myOShips.add(elem2);
+
+            });
+        });
+        myGPlayer.getAllSalvos().forEach(slv ->{
+            slv.getSalvoLocations().forEach(slv2 ->{
+                myOShipHits.add(slv2);
+            });
+        });
+        List<Object> shipsHits = new ArrayList<>();
+
+        myOShips.forEach(e -> {
+            myOShipHits.forEach(f -> {
+                if (f == e) {
+                    shipsHits.add(e);
+                }
+            });
+        });
+        System.out.println(shipsHits);
+        return shipsHits;
+    }
+
     @RequestMapping("/game_view/{gPlayer_Id}")
     public Map<String, Object> getGameView(@PathVariable Long gPlayer_Id, Authentication authentication) {
         GamePlayer myGPlayer = gamePlayerRepo.findOne(gPlayer_Id);
@@ -334,34 +369,5 @@ public class SalvoController {
         return new ResponseEntity<>(makeMap("Success", "salvo fired"),HttpStatus.CREATED);
 
     }
-//
-//    private Map<String, Object> getOpponentShips(GamePlayer gamePlayer) {
-//        Map<String, Object> dto = new LinkedHashMap<String, Object>();
-//      int shipsLength = gamePlayer.getAllShips().size();
-//
-////            dto.put("ships", gamePlayer.getGame().getOpponent(gamePlayer).getAllShips().iterator().next().getShipLocations());
-//            System.out.println(gamePlayer.getGame().getOpponent(gamePlayer).getAllShips().forEach(ship -> ship.getShipLocations()));
-//            System.out.println(gamePlayer.getAllSalvos().iterator().next().getSalvoLocations());
-//
-//        return dto;
-//    }
-
-    private List<Object> getOShips(GamePlayer myGPlayer) {
-        List<Object> myOShips = new ArrayList<>();
-        myGPlayer.getGame().getOpponent(myGPlayer).getAllShips().forEach(elem -> {
-            elem.getShipLocations().forEach(elem2 ->{
-                myOShips.add(elem2
-
-
-                );
-
-            });
-
-        });
-        System.out.println(myOShips);
-        return myOShips;
-    }
-
-
 }
 

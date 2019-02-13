@@ -161,8 +161,8 @@ function placeSalvoes(slvGames){
         if(elem.gp_id == myParam){
             elem.gp_salvoes.forEach(elem2 => {
                 elem2.salvoes_locations.forEach(place => {
-                    var slvSeg = document.getElementById(place)
-                       if(slvSeg.id ==  place){
+                    var slvSeg = document.getElementById("S" + place)
+                       if(slvSeg.id ==  "S" + place){
                              let hitDiv = document.createElement("div")
                              hitDiv.setAttribute("class", "hit-div")
                             let x = elem2.turn;
@@ -191,9 +191,8 @@ function placeSHits(slvGames){
         if(elem.gp_id != myParam){
             elem.gp_salvoes.forEach(elem2 => {
                 elem2.salvoes_locations.forEach(place => {
-                    let newId = place.split('').slice(1, 4).join("")
-                    var slvSeg = document.getElementById( newId)
-                       if(slvSeg.id ==  newId){
+                    var slvSeg = document.getElementById(place)
+                       if(slvSeg.id ==  place){
                            let hitDiv = document.createElement("div")
                            hitDiv.setAttribute("class", "hit-div")
                            let x = elem2.turn;
@@ -224,8 +223,8 @@ function myOpponentHits(slvGames){
             if(elem.gp_id != myParam){
                 elem.gp_salvoes.forEach(elem2 =>{
                 elem2.salvoes_locations.forEach(elem3 => {
-                    let elem4 = elem3.split('').slice(1, 4).join("")
-                    let a = shipLocArr.filter(loc => loc == elem4)
+//                    let elem4 = elem3.split('').slice(1, 4).join("")
+                    let a = shipLocArr.filter(loc => loc == elem3)
                          if(a.length > 0){
                            a.forEach(hit => {
                                 let div_id = hit
@@ -405,12 +404,12 @@ function getSalvo(id){
     let isClicked = false
     let allSalvoes = []
     let td = document.getElementById(id)
+    let newId = id.split('').slice(1, 4).join("")
         allSalvoes.push(id)
-//    let newId = id.split('').slice(1, 4).join("")
             if (allSalvoes.includes(id)){
                  isClicked = true
                  if(isClicked == true){
-                    let salvos = {turn: turn, locations:[id]}
+                    let salvos = {turn: turn, locations:[newId]}
                         console.log(salvos)
                         var urlParams = new URLSearchParams(window.location.search);
                         var myParam = urlParams.get('gp');
