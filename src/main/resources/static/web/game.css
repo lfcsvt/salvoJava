@@ -1,38 +1,36 @@
 table{
-
-  width: 510px;
+  width: 40%;
   height 500px;
   margin-bottom: 50px;
-  margin-left: 50px;
-
-
+  table-layout: fixed ;
+  margin-right: 50px;
 }
 
-table tr, th {
+table td{
     border: 1px solid black;
-    width: 30px !important;
-    overflow:hidden;
+    align-content: center;
+     width: 55px;
+     height: 25px;
 
 }
-
-table td, th {
-    border: 1px solid black;
-    width: 30px ;
-    height: 30px;
-
-    overflow:hidden;
-
-}
-
 
 .hit-div{
     background-color: orange;
     border-radius: 100px;
+    max-width: 25px;
+    max-height: 25px;
+    margin: 0px;
+    display: flex
 }
 
+.hit-div p {
+    width: 20px;
+    text-align: center
+    align: center
+}
 p{
- text-align: center;
- margin-left: 5px;
+ text-align: center
+
 }
 
  .draggable {
@@ -165,3 +163,21 @@ p{
     -moz-transform:rotate(90deg);
     -o-transform:rotate(90deg);
     }
+
+.game-turn{
+    text-align: center;
+}
+
+.container{
+
+}
+
+.col-4 {
+    border: 1px solid black;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#grid-background {
+margin: 0px;
+}

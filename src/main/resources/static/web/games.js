@@ -273,7 +273,10 @@ function addNewGame(){
          .then(function(data){
          console.log(data)
          console.log(data.gPlayer_id)
-         window.location =  "game.html?gp=" + data.gPlayer_id
+         let id = data.gPlayer_id
+         let url = "/web/game.html?gp=" + id
+         console.log(url)
+         window.location =  url
          });
     } else {
         alert("You must be logged in to create a game")

@@ -1,10 +1,9 @@
-makeGrid()
-//makeSGrid()
-
   var urlParams = new URLSearchParams(window.location.search);
   var myParam = urlParams.get('gp');
   getData()
+  makeGrid()
   let turn;
+
 
  function getData() {
  var url1 = 'http://localhost:8080/api/game_view/' + myParam ;
@@ -30,11 +29,12 @@ function main(slvGames){
    placeSHits(slvGames)
    myOpponentHits(slvGames)
    getTurn(slvGames)
+   opponentInfo(slvGames)
+   histTable(slvGames)
+   gameTurn(slvGames)
 //   checkSalvo()
 
 }
-
-
 
 function makeGrid(){
 var tblBody = document.getElementById("grid-tBody")
@@ -167,15 +167,22 @@ function placeSalvoes(slvGames){
                              hitDiv.setAttribute("class", "hit-div")
                             let x = elem2.turn;
                            let text = document.createElement("p")
+                           text.setAttribute("align", "center")
                            var t = document.createTextNode(x);
                            text.appendChild(t)
                            hitDiv.appendChild(text)
                            slvSeg.appendChild(hitDiv)
+                           slvGames.histObj.hitOShips.forEach(el =>{
+                                if(place == el.hit){
+                                    hitDiv.setAttribute("style", "background-color: red")
+                                    }
+                                });
                     }
                 })
             })
         }
     })
+
 }
 
 
@@ -442,22 +449,84 @@ function getSalvo(id){
 
 }
 
-var hitSink = {
-    players:[
-    {name: "Jack Bauer", hit:[{turn:1, slvLoc:"F3", shipType:"Submarine"},{turn:3, slvLoc:"H2", shipType:"Patrol Boat"} ]},
-    {name:"Chloe O'Brian", hit:[{turn:2, slvLoc:"J3", shipType:"Patrol Boat"},{turn:5, slvLoc:"B10",shipType:"Carrier"}]}
-    ]
+function opponentInfo(slvGames){
+     var arr = slvGames.histObj.turnHitMe
+     var arr2 = slvGames.histObj.turnHitO
+     var arr3 = slvGames.histObj.hitOShips
+     var arr4 = slvGames.histObj.hitMyShips
+     var oppHist =[]
+         arr4.forEach(el =>{
+             let obj = {}
+                arr.forEach(el4 => {
+                let ship ;
+                        if(el4.hit == el.hit){
+                        ship = el.ship
+                             obj = {
+                              "gp_id": el4.player,
+                              "turn": el4.turn,
+                              "hit": el4.hit,
+                              "ship": ship
+                                   }
+                        }
+                    })
+             oppHist.push(obj)
+         })
+         arr2.forEach(el2 =>{
+            let obj2 = {}
+            arr3.forEach(el3 => {
+            let ship ;
+            if(el2.hit == el3.hit){
+                ship = el3.ship
+                obj2 = {
+                "gp_id": el2.player,
+                "turn": el2.turn,
+                "hit": el2.hit,
+                "ship": ship
+                       }
+                }
+            })
+         oppHist.push(obj2)
+     })
+     return oppHist
+ }
 
-}
+ function histTable(slvGames){
+     var arr = opponentInfo(slvGames)
+     slvGames.gamePlayer.forEach(elem => {
+        let user = document.getElementById("player")
+        let opponent = document.getElementById("opponent")
+             if(elem.gp_id == myParam){
+                user.innerHTML = elem.player.name + " "
+             }
+             else if(elem.gp_id != myParam){
+                opponent.innerHTML = elem.player.name
+             }
+     })
+         arr.forEach(el => {
+            if(el.gp_id == myParam){
+                let x = document.getElementById("O" + el.ship)
+                x.innerHTML = el.ship
+            }
+            else if(el.gp_id != myParam){
+            let y = document.getElementById(el.ship)
+            y.innerHTML = el.ship
 
-console.log(hitSink)
+            }
+         })
 
-function getHist(){
-    hitSink.players.forEach(el => {
-        el.hit.forEach(elem => {
-//            console.log(elem)
-        })
+ }
 
+
+function gameTurn(slvGames){
+    let arr = []
+    let turn = document.getElementById("game-turn")
+        slvGames.salvoes.forEach(salvo => {
+        arr.push(salvo.gp_salvoes.length)
     })
+        turn.innerHTML = Math.max(...arr)
 }
-getHist()
+
+
+
+
+

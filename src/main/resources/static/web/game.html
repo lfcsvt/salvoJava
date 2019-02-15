@@ -4,71 +4,90 @@
     <meta charset="UTF-8">
     <title>Ship Grid</title>
     <link rel="stylesheet" type="text/css" href="game.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 <body>
     <div id="grid-layout">
-      <div><h1>Ship Locations</h1></div>
-        <div id="game-info"></div>
-            <div id="grid-background">
-                <table id="grid-table">
-                    <thead id="grid-tHead">
-                    <td>Ships</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
-                    <td>8</td>
-                    <td>9</td>
-                    <td>10</td>
-                    </thead>
-                    <tbody id="grid-tBody">
-                    </tbody>
-                </table>
-                <table>
-                    <thead>
-                    <td>turn</td>
-                    <td>hits on You</td>
-                    <td>hits on Opponent</td>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <!--<div class="navy-yard" >-->
-                    <!--<div class="draggable patrol-boat" id="drag1" draggable="true" ondragstart="drag(event)">-->
-                        <!--P-boat-->
-                        <!--<button id="turn1">turn</button>-->
-                    <!--</div>-->
-                    <!--<div class="draggable carrier" id="drag2" draggable="true" ondragstart="drag(event)">Carrier <button id="turn2">turn</button></div>-->
-                    <!--<div class="draggable battleship" id="drag3" draggable="true" ondragstart="drag(event)">Battleship <button id="turn3">turn</button></div>-->
-                    <!--<div class="draggable destroyer"  id="drag4"draggable="true" ondragstart="drag(event)">Destroyer <button id="turn4">turn</button></div>-->
-                    <!--<div class="draggable submarine" id="drag5" draggable="true" ondragstart="drag(event)">Submarine <button id="turn5">turn</button></div>-->
-                <!--</div>-->
-
+      <div style="text-align: center;"><h3>BATTLESHIP</h3></div>
+        <div id="game-info" class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h6 id="player"></h6>
+                </div>
+                <div class="col-sm-6">
+                    <h6 id="opponent"></h6>
+                </div>
+            </div>
+        </div>
+            <div id="grid-background" class="container" style="max-width: 100%">
+                <div class="row">
+                    <div class="col-6">
+                        <table id="grid-table">
+                            <thead id="grid-tHead">
+                            <td>Ships</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            </thead>
+                            <tbody id="grid-tBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table id="salvo-table">
+                            <thead id="salvo-tHead">
+                            <td>Salvos</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            </thead>
+                            <tbody id="salvo-tBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <button onclick="placeShip()">place ships</button>
                 <button onclick="addShips()">add ships</button>
-                <table id="salvo-table">
-                    <thead id="salvo-tHead">
-                    <td>Salvoes</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
-                    <td>8</td>
-                    <td>9</td>
-                    <td>10</td>
-                    </thead>
-                    <tbody id="salvo-tBody">
-                    </tbody>
-                </table>
             </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <h6 class="game-turn">Game Turn</h6>
+                    <p class="game-turn" id="game-turn"></p>
+                </div>
+                <div class="col-4">
+                    <h6>Hits on me</h6>
+                    <p class="ship" id="Carrier"></p>
+                    <p class="ship" id="Battleship"></p>
+                    <p class="ship" id="Submarine"></p>
+                    <p class="ship" id="Patrol Boat"></p>
+                    <p class="ship" id="Destroyer"></p>
+                </div>
+                <div class="col-4">
+                    <h6>Hits on Opponent</h6>
+                    <p class="ship" id="OCarrier"></p>
+                    <p class="ship" id="OBattleship"></p>
+                    <p class="ship" id="OSubmarine"></p>
+                    <p class="ship" id="OPatrol Boat"></p>
+                    <p class="ship" id="ODestroyer"></p>
+                </div>
+            </div>
+        </div>
         </div>
     <!--<div class="navy-yard" >-->
         <!--<div class="draggable patrol-boat" id="drag1" draggable="true" ondragstart="drag(event)">-->
@@ -86,6 +105,16 @@
         <!--&lt;!&ndash;<div class="draggable submarine"><p>submarine</p></div>&ndash;&gt;-->
     <!--</div>-->
     <!--<p id="drag1" draggable="true" ondragstart="drag(event)" width="100" height="22">Patrol Boat<p/>-->
+    <!--<div class="navy-yard" >-->
+    <!--<div class="draggable patrol-boat" id="drag1" draggable="true" ondragstart="drag(event)">-->
+    <!--P-boat-->
+    <!--<button id="turn1">turn</button>-->
+    <!--</div>-->
+    <!--<div class="draggable carrier" id="drag2" draggable="true" ondragstart="drag(event)">Carrier <button id="turn2">turn</button></div>-->
+    <!--<div class="draggable battleship" id="drag3" draggable="true" ondragstart="drag(event)">Battleship <button id="turn3">turn</button></div>-->
+    <!--<div class="draggable destroyer"  id="drag4"draggable="true" ondragstart="drag(event)">Destroyer <button id="turn4">turn</button></div>-->
+    <!--<div class="draggable submarine" id="drag5" draggable="true" ondragstart="drag(event)">Submarine <button id="turn5">turn</button></div>-->
+    <!--</div>-->
 
 <script src="game.js"></script>
     <script
@@ -94,6 +123,9 @@
             crossorigin="anonymous">
 
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </body>
 </html>
