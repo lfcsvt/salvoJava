@@ -61,12 +61,6 @@ public class SalvoController {
                 : null;
     }
 
-    private GamePlayer myOpponent(GamePlayer gamePlayer){
-       GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
-
-        return opponent;
-    }
-
     private Map<String, Object> makeGameDTO(Game game) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", game.getId());
@@ -105,7 +99,6 @@ public class SalvoController {
         dto.put("turnHitMe",infoOpponent(gamePlayer) );
         dto.put("hitOShips",shipsHitMe(gamePlayer) );
         dto.put("hitMyShips",shipsHitOpponent(gamePlayer) );
-
         return dto;
     }
 
@@ -173,7 +166,6 @@ public class SalvoController {
     private List<Object> shipsHitOpponent(GamePlayer gamePlayer) {
         List<Object> hitList = new ArrayList<>();
         GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
-        System.out.println(opponent.getGame().getOpponent(opponent));
         if(opponent != null) {
             getMyHits(opponent).stream().forEach(el -> {
                 opponent.getGame().getOpponent(opponent).getAllShips().stream().forEach(ship -> {
@@ -421,7 +413,6 @@ public class SalvoController {
         if (gamePlayerRepo.findById(gPlayer_id).iterator().next().getAllShips().size() > 0) {
             return new ResponseEntity<>(makeMap("Error", "you cannot add more ships"), HttpStatus.UNAUTHORIZED);
         }
-
 
         else {
             GamePlayer gamePlayer = gamePlayerRepo.findOne(gPlayer_id);

@@ -794,7 +794,16 @@ function oHits(slvGames){
     })
 }
 
+function testShip(){
+    let arr = []
+   let x = Math.floor(Math.random() * 10) + 1;
+    for(var i = 0; i < 5; i++){
+        arr.push(x ++)
+    }
 
+   console.log(arr)
 
+}
+testShip()
 
 
