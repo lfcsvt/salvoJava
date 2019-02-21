@@ -66,25 +66,95 @@
             </div>
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-2">
                     <h6 class="game-turn">Game Turn</h6>
                     <p class="game-turn" id="game-turn"></p>
                 </div>
-                <div class="col-4">
-                    <h6>Hits on me</h6>
-                    <p class="ship" id="Carrier"></p>
-                    <p class="ship" id="Battleship"></p>
-                    <p class="ship" id="Submarine"></p>
-                    <p class="ship" id="Patrol Boat"></p>
-                    <p class="ship" id="Destroyer"></p>
+                <div class="col-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Sunk</h6>
+                                <p id="sCar"></p>
+                                <p id="sBat"></p>
+                                <p id="sSub"></p>
+                                <p id="sPat"></p>
+                                <p id="sDes"></p>
+                            </div>
+                            <div class="col-3">
+                                <h6>Hits on me</h6>
+                                <p class="ship" id="Carrier"></p>
+                                <p class="ship" id="Battleship"></p>
+                                <p class="ship" id="Submarine"></p>
+                                <p class="ship" id="Patrol Boat"></p>
+                                <p class="ship" id="Destroyer"></p>
+                            </div>
+                            <div class="col-6">
+                                <h6>Hit on Ships</h6>
+                                <div id="Cr-hit" class="ship-hit">
+                                    <div class="row" id="carrier-hit"></div>
+                                </div>
+                                <div id="Bt-hit" class="ship-hit">
+                                    <div class="row" id="battleship-hit"></div>
+                                </div>
+                                <div id="Sb-hit" class="ship-hit">
+                                    <div class="row" id="submarine-hit"></div>
+
+                                </div>
+                                <div id="Pt-hit" class="ship-hit">
+                                    <div class="row" id="patrol boat-hit"></div>
+
+                                </div>
+                                <div id="Dt-hit" class="ship-hit">
+                                    <div class="row" id="destroyer-hit"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-4">
-                    <h6>Hits on Opponent</h6>
-                    <p class="ship" id="OCarrier"></p>
-                    <p class="ship" id="OBattleship"></p>
-                    <p class="ship" id="OSubmarine"></p>
-                    <p class="ship" id="OPatrol Boat"></p>
-                    <p class="ship" id="ODestroyer"></p>
+                <div class="col-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Sunk</h6>
+                                <p id="osCar"></p>
+                                <p id="osBat"></p>
+                                <p id="osSub"></p>
+                                <p id="osPat"></p>
+                                <p id="osDes"></p>
+                            </div>
+                            <div class="col">
+                                <h6>Hits on Opponent</h6>
+                                <p class="ship" id="OCarrier"></p>
+                                <p class="ship" id="OBattleship"></p>
+                                <p class="ship" id="OSubmarine"></p>
+                                <p class="ship" id="OPatrol Boat"></p>
+                                <p class="ship" id="ODestroyer"></p>
+                            </div>
+                            <div class="col">
+                                <h6>Hit on Ships</h6>
+                                <div id="Ocr-hit" class="ship-hit">
+                                    <div class="row" id="Ocarrier-hit"></div>
+                                </div>
+                                <div id="Obt-hit" class="ship-hit">
+                                    <div class="row" id="Obattleship-hit"></div>
+                                </div>
+                                <div id="Osb-hit" class="ship-hit">
+                                    <div class="row" id="Osubmarine-hit"></div>
+
+                                </div>
+                                <div id="Opt-hit" class="ship-hit">
+                                    <div class="row" id="Opatrol boat-hit"></div>
+
+                                </div>
+                                <div id="Odt-hit" class="ship-hit">
+                                    <div class="row" id="Odestroyer-hit"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

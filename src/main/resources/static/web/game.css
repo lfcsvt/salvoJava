@@ -171,8 +171,13 @@ p{
 .container{
 
 }
+.col-2 {
+    border: 1px solid black;
+    text-align: center;
+    margin-top: 10px;
 
-.col-4 {
+}
+.col-5 {
     border: 1px solid black;
     text-align: center;
     margin-top: 10px;
@@ -180,4 +185,16 @@ p{
 
 #grid-background {
 margin: 0px;
+}
+
+.col-1 {
+    padding: 0px;
+    border: 1px solid black;
+    color: transparent;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.col-3{
+
 }

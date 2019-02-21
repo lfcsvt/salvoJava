@@ -61,6 +61,12 @@ public class SalvoController {
                 : null;
     }
 
+    private GamePlayer myOpponent(GamePlayer gamePlayer){
+       GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
+
+        return opponent;
+    }
+
     private Map<String, Object> makeGameDTO(Game game) {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", game.getId());
@@ -105,104 +111,116 @@ public class SalvoController {
 
     private List<Object> infoMe(GamePlayer gamePlayer) {
         List<Object> hitList = new ArrayList<>();
-            getMyHits(gamePlayer).stream().forEach(el ->{
-                gamePlayer.getAllSalvos().forEach(elem ->{
-                        if(elem.getSalvoLocations().contains(el)){
-                            Map<String, Object> obj = new LinkedHashMap<String, Object>();
-
-                                obj.put("player", gamePlayer.getId());
-                                obj.put("turn", elem.getTurn());
-                               obj.put("hit", el);
-                           // add obj to list
-                            hitList.add(obj);
-                       }
+        if(getMyHits(gamePlayer) != null) {
+            getMyHits(gamePlayer).stream().forEach(el -> {
+                gamePlayer.getAllSalvos().forEach(elem -> {
+                    if (elem.getSalvoLocations().contains(el)) {
+                        Map<String, Object> obj = new LinkedHashMap<String, Object>();
+                        obj.put("player", gamePlayer.getId());
+                        obj.put("turn", elem.getTurn());
+                        obj.put("hit", el);
+                        // add obj to list
+                        hitList.add(obj);
+                    }
                 });
             });
+
+        }
         return hitList;
     }
 
     private List<Object> infoOpponent(GamePlayer gamePlayer) {
         GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
         List<Object> hitList = new ArrayList<>();
-        getMyHits(opponent).stream().forEach(el ->{
-            opponent.getAllSalvos().forEach(elem ->{
-                if(elem.getSalvoLocations().contains(el)){
-                    Map<String, Object> obj = new LinkedHashMap<String, Object>();
-
-                    obj.put("player", opponent.getId());
-                    obj.put("turn", elem.getTurn());
-                    obj.put("hit", el);
-                    // add obj to list
-                    hitList.add(obj);
-                }
+        if(opponent != null) {
+            getMyHits(opponent).stream().forEach(el -> {
+                opponent.getAllSalvos().forEach(elem -> {
+                    if (elem.getSalvoLocations().contains(el)) {
+                        Map<String, Object> obj = new LinkedHashMap<String, Object>();
+                        obj.put("player", opponent.getId());
+                        obj.put("turn", elem.getTurn());
+                        obj.put("hit", el);
+                        // add obj to list
+                        hitList.add(obj);
+                    }
+                });
             });
-        });
+        }
         return hitList;
     }
 
     private List<Object> shipsHitMe(GamePlayer gamePlayer) {
+        GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
         List<Object> hitList = new ArrayList<>();
-        getMyHits(gamePlayer).stream().forEach(el -> {
-            gamePlayer.getGame().getOpponent(gamePlayer).getAllShips().stream().forEach(ship -> {
-                ship.getShipLocations().stream().forEach(loc ->{
-                    if(loc.equals(el)){
-                        Map<String, Object> hitOnShip = new LinkedHashMap<String, Object>();
-                        hitOnShip.put("player", gamePlayer.getId());
-                        hitOnShip.put("ship", ship.getType());
-                        hitOnShip.put("hit", el);
-                        hitList.add(hitOnShip);
-                    }
+        if (opponent != null){
+            getMyHits(gamePlayer).stream().forEach(el -> {
+                opponent.getAllShips().stream().forEach(ship -> {
+                    ship.getShipLocations().stream().forEach(loc -> {
+                        if (loc.equals(el)) {
+                            Map<String, Object> hitOnShip = new LinkedHashMap<String, Object>();
+                            hitOnShip.put("player", gamePlayer.getId());
+                            hitOnShip.put("ship", ship.getType());
+                            hitOnShip.put("hit", el);
+                            hitList.add(hitOnShip);
+                        }
+                    });
                 });
             });
-        });
-
+        }
         return hitList;
     }
 
     private List<Object> shipsHitOpponent(GamePlayer gamePlayer) {
         List<Object> hitList = new ArrayList<>();
         GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
-        getMyHits(opponent).stream().forEach(el -> {
-            opponent.getGame().getOpponent(opponent).getAllShips().stream().forEach(ship -> {
-                ship.getShipLocations().stream().forEach(loc ->{
-                    if(loc.equals(el)){
-                        Map<String, Object> hitOnShip = new LinkedHashMap<String, Object>();
-                        hitOnShip.put("player", opponent.getId());
-                        hitOnShip.put("ship", ship.getType());
-                        hitOnShip.put("hit", el);
-                        hitList.add(hitOnShip);
-                    }
+        System.out.println(opponent.getGame().getOpponent(opponent));
+        if(opponent != null) {
+            getMyHits(opponent).stream().forEach(el -> {
+                opponent.getGame().getOpponent(opponent).getAllShips().stream().forEach(ship -> {
+
+                    ship.getShipLocations().stream().forEach(loc -> {
+                        if (loc.equals(el)) {
+                            Map<String, Object> hitOnShip = new LinkedHashMap<String, Object>();
+                            hitOnShip.put("player", opponent.getId());
+                            hitOnShip.put("ship", ship.getType());
+                            hitOnShip.put("hit", el);
+                            hitList.add(hitOnShip);
+                        }
+                    });
                 });
             });
-        });
-
+        }
         return hitList;
     }
 
     private List<Object> getMyHits(GamePlayer myGPlayer) {
+        GamePlayer opponent = myGPlayer.getGame().getOpponent(myGPlayer);
         List<Object> myOShips = new ArrayList<>();
         List<Object> myOShipHits = new ArrayList<>();
         List<Object> shipsHits = new ArrayList<>();
-        myGPlayer.getGame().getOpponent(myGPlayer).getAllShips().forEach(elem -> {
-            elem.getShipLocations().forEach(elem2 ->{
-                myOShips.add(elem2);
+        if(opponent != null) {
+           opponent.getAllShips().forEach(elem -> {
+                elem.getShipLocations().forEach(elem2 -> {
+                    myOShips.add(elem2);
+                });
             });
-        });
-        myGPlayer.getAllSalvos().forEach(slv ->{
-            slv.getSalvoLocations().forEach(slv2 ->{
-                myOShipHits.add(slv2);
+            myGPlayer.getAllSalvos().forEach(slv -> {
+                slv.getSalvoLocations().forEach(slv2 -> {
+                    myOShipHits.add(slv2);
+                });
             });
-        });
 
-        myOShips.forEach(e -> {
-            myOShipHits.forEach(f -> {
-                if (f == e) {
-                    shipsHits.add(e);
-                }
+            myOShips.forEach(e -> {
+                myOShipHits.forEach(f -> {
+                    if (f == e) {
+                        shipsHits.add(e);
+                    }
+                });
             });
-        });
 
-        return shipsHits;
+            return shipsHits;
+        }
+        return null;
     }
 
     @RequestMapping("/game_view/{gPlayer_Id}")
@@ -413,11 +431,8 @@ public class SalvoController {
                 shipRepo.save(newShip);
             }
             return new ResponseEntity<>(makeMap("Success", "the ship was placed"),HttpStatus.CREATED);
-
-
         }
     }
-
 
 
     @RequestMapping(path="/games/players/{gPlayer_id}/salvos", method = RequestMethod.POST)
@@ -439,9 +454,11 @@ public class SalvoController {
             return new ResponseEntity<>(makeMap("Error", "Wrong turn "), HttpStatus.UNAUTHORIZED);
         }
 
+        if(gamePlayer.getAllSalvos().size() > gamePlayer.getGame().getOpponent(gamePlayer).getAllSalvos().size()){
+            return new ResponseEntity<>(makeMap("Error", "Wrong turn "), HttpStatus.UNAUTHORIZED);
+        }
             gamePlayer.makeSalvo(mySalvo);
             salvoRepo.save(mySalvo);
-
 
         return new ResponseEntity<>(makeMap("Success", "salvo fired"),HttpStatus.CREATED);
 

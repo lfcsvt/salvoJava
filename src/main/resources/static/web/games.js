@@ -38,18 +38,17 @@ function main (slvGames){
 
 }
 function getGPId(slvGames){
-slvGames.forEach(game => {
-game.gamePlayers.forEach(gp =>{
-//console.log(gp.gp_id)
+    slvGames.forEach(game => {
+        game.gamePlayers.forEach(gp =>{
+            //console.log(gp.gp_id)
 
-})
-})
+        })
+    })
 }
 function main2 (leaders){
-
-createLBoard(leaders)
-
+    createLBoard(leaders)
 }
+
 function createLBoard(leaders){
 
     var lTable = document.getElementById("leader-table")
@@ -144,22 +143,6 @@ function signIn() {
                     location.reload();
                     if(data.status == "Success"){
                     loggedUser == true
-//                    fetch('http://localhost:8080/api/login', {
-//                                        credentials: "include",
-//                                        method: "POST",
-//                                        headers: {
-//                                                  "Content-Type": "application/x-www-form-urlencoded",
-//                                                  'Accept': 'application/json',
-//                                                  "Access-Control-Allow-Origin" : "*",
-//                                                  "Access-Control-Allow-Credentials" : true
-//                                                  },
-//                                        body: `userName=${info.userName}&userPassword=${info.userPassword}`
-//
-//                                    })
-//                                    .then(function(data){
-//                                        console.log(data)
-//                        });
-
                         var form2  = document.getElementById("signIn")
                         form2.style.display = 'none';
                         var btnJoin  = document.getElementById("btn3")
@@ -264,7 +247,7 @@ function addNewGame(){
         method: "POST",
         headers: {
              "Content-Type": "application/x-www-form-urlencoded",
-             'Accept': 'application/json'
+             'Accept': 'application/json',
                   },
          })
          .then(function(response){
@@ -272,8 +255,8 @@ function addNewGame(){
          })
          .then(function(data){
          console.log(data)
-         console.log(data.gPlayer_id)
          let id = data.gPlayer_id
+         console.log(id)
          let url = "/web/game.html?gp=" + id
          console.log(url)
          window.location =  url
