@@ -98,7 +98,7 @@ public class SalvoController {
         dto.put("turnHitO",infoMe(gamePlayer) );
         dto.put("turnHitMe",infoOpponent(gamePlayer) );
         dto.put("hitOShips",shipsHitMe(gamePlayer) );
-        dto.put("hitMyShips",shipsHitOpponent(gamePlayer) );
+        dto.put("hitMyShips",shipsHitOpponent(gamePlayer));
         return dto;
     }
 
@@ -176,6 +176,7 @@ public class SalvoController {
                             hitOnShip.put("player", opponent.getId());
                             hitOnShip.put("ship", ship.getType());
                             hitOnShip.put("hit", el);
+                            hitOnShip.put("hits", ship.getHits());
                             hitList.add(hitOnShip);
                         }
                     });
@@ -465,7 +466,6 @@ public class SalvoController {
             salvoRepo.save(mySalvo);
 
         return new ResponseEntity<>(makeMap("Success", "salvo fired"),HttpStatus.CREATED);
-
     }
 }
 

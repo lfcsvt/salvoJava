@@ -29,7 +29,6 @@ function getTurn(slvGames){
 // serves as
 function main(slvGames){
    turn = getTurn(slvGames)
-   console.log(turn)
    makeSGrid(slvGames)
    addPlayerInfo(slvGames)
    placeShips(slvGames)
@@ -794,23 +793,39 @@ function oHits(slvGames){
 }
 
 function testShip(){
-    let arr = []
-   let x = Math.floor(Math.random() * 10) + 1;
-   console.log(x)
-    for(var i = 0; i < 5; i++){
+   let arr = []
+   let carrier = []
+   let battleship = []
+   let option = Math.floor(Math.random() * 2);
+   let a = Math.floor(Math.random() * 10) + 1;
+   let index = Math.floor(Math.random() * 5);
+   let dif = 10 - a
+   var arr2 = Array.from(Array(10), (e, i) => String.fromCharCode(i + 65));
+   let letter = arr2[index]
+if(option == 0){
+   for(var i = 0; i< 5; i++){
+       if(dif > 6){
+            arr.push(letter + a++)
+       }
+       else  {
+        arr.push(letter + a--)
+       }
+   }
+   if(arr.includes(0)){
+    arr.pop(0)
+    let num = Math.max(...arr)
+    arr.push(num + 1)
+   }
 
-        if( x < 5){
-            arr.push(x ++)
+   carrier = arr.sort(function(a, b){return a-b})
+   } else {
+        for(var i = 0; i< 5;i++){
+            arr.push(arr2[index++] + a)
+            carrier = arr.sort(function(a, b){return a-b})
+         }
+   }
 
-        }
-        else {
-            arr.push(x --)
-        }
-
-    }
-
-   console.log(arr)
-
+   return carrier
 }
 testShip()
 

@@ -35,7 +35,7 @@ public class Ship {
     public Ship(String type) {
         this.shipType = type;
         this.id = getId();
-        this.isSunk = false;
+//        this.isSunk = false;
     }
 
     public long getId() {
@@ -73,4 +73,5 @@ public class Ship {
     public void setSunk(boolean sunk) { isSunk = sunk; }
 
     public boolean isSunk() { return isSunk; }
+
 }
