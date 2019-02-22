@@ -424,7 +424,7 @@ public class SalvoController {
             return new ResponseEntity<>(makeMap("Success", "the ship was placed"),HttpStatus.CREATED);
         }
     }
-
+    public String salvoLoc = " ";
 
     @RequestMapping(path="/games/players/{gPlayer_id}/salvos", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>>placeSalvos(
@@ -441,13 +441,26 @@ public class SalvoController {
             return new ResponseEntity<>(makeMap("Error", "Not the right player"), HttpStatus.UNAUTHORIZED);
         }
 
-        if(mySalvo.getTurn() < gamePlayer.getAllSalvos().size() + 1){
+        if(mySalvo.getTurn() > gamePlayer.getAllSalvos().size() + 1){
             return new ResponseEntity<>(makeMap("Error", "Wrong turn "), HttpStatus.UNAUTHORIZED);
         }
 
         if(gamePlayer.getAllSalvos().size() > gamePlayer.getGame().getOpponent(gamePlayer).getAllSalvos().size()){
             return new ResponseEntity<>(makeMap("Error", "Wrong turn "), HttpStatus.UNAUTHORIZED);
         }
+
+        gamePlayer.getAllSalvos().forEach(salvo -> {
+            salvo.getSalvoLocations().stream().forEach(el ->{
+                    if(mySalvo.getSalvoLocations().iterator().next().equals(el)){
+                        salvoLoc = el;
+                    }
+            });
+
+        });
+        if(mySalvo.getSalvoLocations().iterator().next().equals(salvoLoc)){
+            return new ResponseEntity<>(makeMap("Error", "Can't fire s shots at same place "), HttpStatus.UNAUTHORIZED);
+        }
+
             gamePlayer.makeSalvo(mySalvo);
             salvoRepo.save(mySalvo);
 

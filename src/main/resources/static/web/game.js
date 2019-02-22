@@ -15,9 +15,21 @@ var url1 = 'http://localhost:8080/api/game_view/' + myParam
       })
       .catch(err => console.log(err));
 }
+
+function getTurn(slvGames){
+    let n;
+        slvGames.salvoes.forEach(el => {
+            if(el.gp_id == myParam){
+                el.gp_salvoes.length
+                n = el.gp_salvoes.length + 1
+            }
+        })
+    return n
+}
 // serves as
 function main(slvGames){
    turn = getTurn(slvGames)
+   console.log(turn)
    makeSGrid(slvGames)
    addPlayerInfo(slvGames)
    placeShips(slvGames)
@@ -56,19 +68,6 @@ var row = document.createElement("tr");
         tblBody.appendChild(row);
     }
     tbl.appendChild(tblBody);
-}
-
-function getTurn(slvGames){
-    let n;
-    if( slvGames.salvoes > 0){
-        slvGames.salvoes.forEach(el => {
-            if(el.gp_id == myParam){
-                el.gp_salvoes.length
-                n = el.gp_salvoes.length + 1
-            }
-        })
-    }
-    return n
 }
 
 function makeSGrid(slvGames){
@@ -797,8 +796,17 @@ function oHits(slvGames){
 function testShip(){
     let arr = []
    let x = Math.floor(Math.random() * 10) + 1;
+   console.log(x)
     for(var i = 0; i < 5; i++){
-        arr.push(x ++)
+
+        if( x < 5){
+            arr.push(x ++)
+
+        }
+        else {
+            arr.push(x --)
+        }
+
     }
 
    console.log(arr)
