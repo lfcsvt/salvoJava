@@ -288,110 +288,57 @@ function getRandomInt(max) {
 }
 
 function addShips(){
-    var  data = [ ]
-    var carrierArr = []
-    var patrolBoatArr = []
-    var destroyerArr = []
-    var submarineArr = []
-    var battleshipArr = []
-    var urlParams = new URLSearchParams(window.location.search);
-    var myParam = urlParams.get('gp');
-    var arr = Array.from(Array(10).keys())
-    var arr2 = Array.from(Array(10), (e, i) => String.fromCharCode(i + 65));
-            arr.forEach(el => {
-                    arr2.forEach(elem =>{
-                        data.push(elem + (el + 1))
-                                        })
-                              })
-    for(var i = 0; i < data.length; i++){
-        while(carrierArr.length < 5 ){
-            carrierArr = data.slice(0, 5).concat(carrierArr);
-            data = data.slice(5, -1)
-            console.log(carrierArr)
-                for (var j = 0; j < data.length; j++){
-                    while(battleshipArr.length < 4){
-                        battleshipArr = data.slice(89, -1).concat(battleshipArr);
-                            data = data.slice(0, 89);
-                            console.log(battleshipArr)
-                for (var x = 0; x < data.length; x++){
-                    while(submarineArr.length < 3){
-                         submarineArr = data.slice(7, 10).concat(submarineArr);
-                             data = data.filter( item => !submarineArr.includes(item))
-                             console.log(submarineArr)
-                for (var y = 0; y < data.length; y++ ){
-                     while(destroyerArr.length < 3){
-                         destroyerArr = data.slice(17,20).concat(destroyerArr);
-                            data = data.filter( item => !destroyerArr.includes(item))
-                            console.log(destroyerArr)
-                for (var z = 0; z < data.length; z++){
-                     while(patrolBoatArr.length < 2){
-                          patrolBoatArr = data.slice(77, 78).concat(patrolBoatArr);
-                             data = data.filter( item => !patrolBoatArr.includes(item))
-                                console.log(patrolBoatArr)
-                                    }
-
-                                }
-                            }
-                        }
-
-                    }
-                 }
-
-               }
-            }
-
-        }
 
     }
-    for(var c = 0; c < 1; c++){
-    let n = getRandomInt(25) + 1
-    const every_nth = (data, nth) => data.filter((e, i) => i % nth === nth - 1);
-    let a = data.slice(0, n)
-     data = data.filter( item => !a.includes(item))
-
-    let c = every_nth(data, 10)
-    console.log(c);
-    while(c.length > 5){
-        c.shift()
-        c.pop()
-        console.log(c)
-    }
-    }
-
-
-var urlParams = new URLSearchParams(window.location.search);
-    var myParam = urlParams.get('gp');
-
-    let ships = [
-              { type: "Carrier", locations: carrierArr},
-              { type: "Battleship",locations: battleshipArr},
-              { type: "Destroyer", locations: submarineArr },
-              { type: "Submarine", locations: destroyerArr },
-              { type: "Patrol Boat", locations: patrolBoatArr }
-              ]
-                let  url = '/api/games/players/'+ myParam + '/ships'
-                  console.log(url);
-
-                  fetch(url, {
-                      method: "POST",
-                      credentials: "include",
-                      headers:{
-                          'Accept': "application/json",
-                          'Content-Type': "application/json"
-                      },
-
-                       body : JSON.stringify(ships)
-
-                       })
-                       .then(function(response){
-                          return response.json();
-                       })
-                       .then(function(json){
-
-                          location.reload();
-                       });
-
-}
+//    for(var c = 0; c < 1; c++){
+//    let n = getRandomInt(25) + 1
+//    const every_nth = (data, nth) => data.filter((e, i) => i % nth === nth - 1);
+//    let a = data.slice(0, n)
+//     data = data.filter( item => !a.includes(item))
+//
+//    let c = every_nth(data, 10)
+//    console.log(c);
+//    while(c.length > 5){
+//        c.shift()
+//        c.pop()
+//        console.log(c)
+//    }
+//    }
+//
+//
+//var urlParams = new URLSearchParams(window.location.search);
+//    var myParam = urlParams.get('gp');
+//
+//    let ships = [
+//              { type: "Carrier", locations: carrierArr},
+//              { type: "Battleship",locations: battleshipArr},
+//              { type: "Destroyer", locations: submarineArr },
+//              { type: "Submarine", locations: destroyerArr },
+//              { type: "Patrol Boat", locations: patrolBoatArr }
+//              ]
+//                let  url = '/api/games/players/'+ myParam + '/ships'
+//                  console.log(url);
+//
+//                  fetch(url, {
+//                      method: "POST",
+//                      credentials: "include",
+//                      headers:{
+//                          'Accept': "application/json",
+//                          'Content-Type': "application/json"
+//                      },
+//
+//                       body : JSON.stringify(ships)
+//
+//                       })
+//                       .then(function(response){
+//                          return response.json();
+//                       })
+//                       .then(function(json){
+//
+//                          location.reload();
+//                       });
+//
+//}
 
 //function allowDrop(ev) {
 //  ev.preventDefault();
@@ -945,13 +892,72 @@ function testShip(){
                   }
             }
 
-   console.log(carrier)
-   console.log(battleship)
-   console.log(submarine)
-   console.log(destroyer)
-   console.log(pBoat)
-   return carrier
+    function deleteDuplicates(a){
+        for(var i = a.length - 1; i >= 0; i--){
+            if(a.indexOf(a[i]) !== i){
+                a.splice(i, 1);
+            }
+        }
+        return a;
+    }
+
+    function extractArray() {
+        var args = Array.prototype.slice.call(arguments), arr7 = [];
+
+        for (var i = 0; i < args.length; i++) {
+            arr7 = deleteDuplicates(arr7.concat(args[i]));
+        }
+
+        return arr7;
+    }
+
+    var arr7 = extractArray(carrier, destroyer, submarine, battleship, pBoat);
+
+
+    if(arr7.length == 17){
+            console.log(carrier)
+            console.log(battleship)
+            console.log(submarine)
+            console.log(destroyer)
+            console.log(pBoat)
+       let data = [
+                     { "type": "Carrier", "locations": carrier },
+                     { "type": "Battleship", "locations": battleship },
+                     { "type": "Destroyer", "locations" : submarine},
+                     { "type": "Submarine", "locations": destroyer },
+                     { "type": "Patrol Boat", "locations": pBoat }
+                      ]
+
+           let  url = '/api/games/players/'+ myParam + '/ships'
+           console.log(data);
+
+           fetch(url, {
+               method: "POST",
+               credentials: "include",
+               headers:{
+                   'Accept': "application/json",
+                   'Content-Type': "application/json"
+               },
+
+                body : JSON.stringify(data)
+
+                })
+                .then(function(response){
+                   return response.json();
+                })
+                .then(function(json){
+//                   location.reload();
+                });
+    }
 }
-testShip()
+//testShip()
+//randomAdd()
+
+
+//
+//function randomAdd(){
+// var array = testShip()
+// console.log(array)
+//}
 
 

@@ -476,19 +476,22 @@ public class SalvoController {
     }
 
     private boolean getEnd(GamePlayer gamePlayer) {
-
         List<Integer> testList = new ArrayList<>();
+        if(testList.size() > 0) {
         gamePlayer.getAllShips().stream().forEach(ship -> {
             testList.add(ship.getShipLocations().size());
 
         });
-        if(testList.stream().mapToInt(Integer::intValue).sum() != 0 || getMyHits(gamePlayer).size() !=0) {
-            if (testList.stream().mapToInt(Integer::intValue).sum() == getMyHits(gamePlayer).size()) {
-                System.out.println(testList.stream().mapToInt(Integer::intValue).sum());
-                gamePlayer.getGame().setOver(true);
+
+            if (testList.stream().mapToInt(Integer::intValue).sum() != 0 || getMyHits(gamePlayer).size() != 0) {
+                if (testList.stream().mapToInt(Integer::intValue).sum() == getMyHits(gamePlayer).size()) {
+                    System.out.println(testList.stream().mapToInt(Integer::intValue).sum());
+                    gamePlayer.getGame().setOver(true);
+                }
             }
         }
-        return  gamePlayer.getGame().isOver();
+            return gamePlayer.getGame().isOver();
+
     }
 
     public String initialState(GamePlayer gamePlayer) {
@@ -505,21 +508,19 @@ public class SalvoController {
     }
     public String gameState(GamePlayer gamePlayer) {
         GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
+
         if (!getEnd(gamePlayer) || !getEnd(opponent)) {
-            if (gamePlayer.getAllSalvos().size() == opponent.getAllSalvos().size()) {
-                return "please shoot a salvo";
-            } else if (gamePlayer.getAllSalvos().size() > opponent.getAllSalvos().size()) {
-                return "waiting for opponent to shoot a salvo";
-            } else {
-                return "opponent is waiting for you to shoot a salvo";
+            if(gamePlayer.getAllSalvos().size() > 0) {
+                if (gamePlayer.getAllSalvos().size() == opponent.getAllSalvos().size()) {
+                    return "please shoot a salvo";
+                } else if (gamePlayer.getAllSalvos().size() > opponent.getAllSalvos().size()) {
+                    return "waiting for opponent to shoot a salvo";
+                } else {
+                    return "opponent is waiting for you to shoot a salvo";
+                }
             }
         }
         return "game is over";
     }
-    public GamePlayer getOpponent(GamePlayer gamePlayer){
-       return gamePlayer.getGame().getOpponent(gamePlayer);
-
-    }
-
 }
 
