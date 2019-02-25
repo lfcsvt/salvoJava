@@ -6,6 +6,8 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -99,6 +101,11 @@ public class SalvoController {
         dto.put("turnHitMe",infoOpponent(gamePlayer) );
         dto.put("hitOShips",shipsHitMe(gamePlayer) );
         dto.put("hitMyShips",shipsHitOpponent(gamePlayer));
+        dto.put("state init",initialState(gamePlayer));
+        dto.put("state",gameState(gamePlayer));
+//        dto.put("opp",getOpponent(gamePlayer));
+
+
         return dto;
     }
 
@@ -176,13 +183,13 @@ public class SalvoController {
                             hitOnShip.put("player", opponent.getId());
                             hitOnShip.put("ship", ship.getType());
                             hitOnShip.put("hit", el);
-                            hitOnShip.put("hits", ship.getHits());
                             hitList.add(hitOnShip);
                         }
                     });
                 });
             });
         }
+
         return hitList;
     }
 
@@ -467,5 +474,52 @@ public class SalvoController {
 
         return new ResponseEntity<>(makeMap("Success", "salvo fired"),HttpStatus.CREATED);
     }
+
+    private boolean getEnd(GamePlayer gamePlayer) {
+
+        List<Integer> testList = new ArrayList<>();
+        gamePlayer.getAllShips().stream().forEach(ship -> {
+            testList.add(ship.getShipLocations().size());
+
+        });
+        if(testList.stream().mapToInt(Integer::intValue).sum() != 0 || getMyHits(gamePlayer).size() !=0) {
+            if (testList.stream().mapToInt(Integer::intValue).sum() == getMyHits(gamePlayer).size()) {
+                System.out.println(testList.stream().mapToInt(Integer::intValue).sum());
+                gamePlayer.getGame().setOver(true);
+            }
+        }
+        return  gamePlayer.getGame().isOver();
+    }
+
+    public String initialState(GamePlayer gamePlayer) {
+        GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
+        if (gamePlayer.getAllShips().size() < 5) {
+            return "please place ships";
+        } else if (opponent == null) {
+            return "waiting for opponent";
+        } else if (opponent.getAllShips().size() < 5) {
+            return "waiting for opponent to place ships";
+        } else {
+            return "please shoot a salvo";
+        }
+    }
+    public String gameState(GamePlayer gamePlayer) {
+        GamePlayer opponent = gamePlayer.getGame().getOpponent(gamePlayer);
+        if (!getEnd(gamePlayer) || !getEnd(opponent)) {
+            if (gamePlayer.getAllSalvos().size() == opponent.getAllSalvos().size()) {
+                return "please shoot a salvo";
+            } else if (gamePlayer.getAllSalvos().size() > opponent.getAllSalvos().size()) {
+                return "waiting for opponent to shoot a salvo";
+            } else {
+                return "opponent is waiting for you to shoot a salvo";
+            }
+        }
+        return "game is over";
+    }
+    public GamePlayer getOpponent(GamePlayer gamePlayer){
+       return gamePlayer.getGame().getOpponent(gamePlayer);
+
+    }
+
 }
 
